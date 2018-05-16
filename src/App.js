@@ -51,7 +51,7 @@ class App extends Component {
       axios.post('/api/addNewFoodToList', {name: this.state.newFoodItem,
         price: this.state.newFoodPrice,
         description: this.state.newFoodDescription}).then(response => {
-          this.setState({foodInfo: response.data})
+          this.setState({foodInfo: response.data, newFoodItem: '', newFoodPrice: '', newFoodDescription: ''})
         })
     }
   }
@@ -80,11 +80,11 @@ class App extends Component {
         <button onClick={() => this.changeHeader()}>Hello</button>
         <div>
           <h3>New Food Item</h3>
-          <input onChange = {(e) => this.addFoodItem(e)}/>
+          <input onChange = {(e) => this.addFoodItem(e)} value={this.state.newFoodItem}/>
           <h3>Food Price</h3>
-          <input onChange = {(e) => this.addFoodPrice(e)}/>
+          <input onChange = {(e) => this.addFoodPrice(e)} value={this.state.newFoodPrice}/>
           <h3>Description</h3>
-          <input onChange = {(e) => this.addFoodDescripion(e)}/>
+          <input onChange = {(e) => this.addFoodDescripion(e)} value={this.state.newFoodDescription}/>
         </div>
         <button onClick = {() => this.addFoodToList()}/>
         {this.state.foodInfo &&
