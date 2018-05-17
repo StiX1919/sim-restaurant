@@ -13,9 +13,6 @@ const app = express();
 //app.use(express.static(`${__dirname}/public/build`));
 //
 
-let color = 'blue'
-let startInfo = [['Cheeseburger', '$6.99', 'A food item with meat, bread and cheese.'], ['Grilled Cheese', '$4.99', 'A sandwitch with only cheese on the inside.']]
-
 // massive(process.env.CONNECTION_STRING)
 //   .then(db => {
 //     app.set("db", db);
@@ -32,16 +29,16 @@ app.use(cors());
 //   })
 // );
 
-app.get('/api/getColor', (req, res) => {
-    res.send(color)
-})
-app.get('/api/serverInfo', (req, res) => {
-  res.send(startInfo)
-})
-app.post('/api/addNewFoodToList', (req, res) => {
-  startInfo.push([req.body.name, req.body.price, req.body.description])
-  res.send(startInfo)
-})
+// app.get('/api/getColor', (req, res) => {
+//     res.send(color)
+// })
+// app.get('/api/serverInfo', (req, res) => {
+//   res.send(startInfo)
+// })
+// app.post('/api/addNewFoodToList', (req, res) => {
+//   startInfo.push([req.body.name, req.body.price, req.body.description])
+//   res.send(startInfo)
+// })
 
 //LISTENING
 app.listen(port, () => {
