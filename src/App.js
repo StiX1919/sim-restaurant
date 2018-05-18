@@ -3,15 +3,26 @@ import logo from './logo.svg';
 import axios from 'axios'
 import './App.css';
 
+
 class App extends Component {
   constructor(props) {
     super()
     this.state = {
+      strengthStat: 2,
+      speedStat: 2,
+      defenseStat: 2,
+      statPoints: 3
     }
 
-    this.addFoodItem = this.addFoodItem.bind(this)
-    this.addFoodPrice = this.addFoodPrice.bind(this)
-    this.addFoodDescripion = this.addFoodDescripion.bind(this)
+    this.strengthStatUp = this.strengthStatUp.bind(this)
+    this.strengthStatDown = this.strengthStatDown.bind(this)
+
+    this.speedStatUp = this.speedStatUp.bind(this)
+    this.speedStatDown = this.speedStatDown.bind(this)
+
+    this.defenseStatUp = this.defenseStatUp.bind(this)
+    this.defenseStatDown = this.defenseStatDown.bind(this)
+
   }
 
 
@@ -36,6 +47,69 @@ class App extends Component {
     }
   }
 
+  strengthStatUp(){
+    let oldStat = this.state.strengthStat
+    let oldPoints = this.state.statPoints
+
+    if(this.state.statPoints > 0){
+      oldStat += 1
+      oldPoints -= 1
+    }
+    this.setState({strengthStat: oldStat, statPoints: oldPoints})
+  }
+  strengthStatDown(){
+    let oldStat = this.state.strengthStat
+    let oldPoints = this.state.statPoints
+
+    if(oldStat > 1){
+      oldStat -= 1
+      oldPoints += 1
+    }
+    this.setState({strengthStat: oldStat, statPoints: oldPoints})
+  }
+
+  speedStatUp(){
+    let oldStat = this.state.speedStat
+    let oldPoints = this.state.statPoints
+
+    if(this.state.statPoints > 0){
+      oldStat += 1
+      oldPoints -= 1
+    }
+    this.setState({speedStat: oldStat, statPoints: oldPoints})
+  }
+  speedStatDown(){
+    let oldStat = this.state.speedStat
+    let oldPoints = this.state.statPoints
+
+    if(oldStat > 1){
+      oldStat -= 1
+      oldPoints += 1
+    }
+    this.setState({speedStat: oldStat, statPoints: oldPoints})
+  }
+
+  defenseStatUp(){
+    let oldStat = this.state.defenseStat
+    let oldPoints = this.state.statPoints
+
+    if(this.state.statPoints > 0){
+      oldStat += 1
+      oldPoints -= 1
+    }
+    this.setState({defenseStat: oldStat, statPoints: oldPoints})
+  }
+  defenseStatDown(){
+    let oldStat = this.state.defenseStat
+    let oldPoints = this.state.statPoints
+
+    if(oldStat > 1){
+      oldStat -= 1
+      oldPoints += 1
+    }
+    this.setState({defenseStat: oldStat, statPoints: oldPoints})
+  }
+
   render() {
 
     return (
@@ -51,7 +125,28 @@ class App extends Component {
             <input onChange = {(e) => this.addFoodDescripion(e)} value={this.state.newFoodDescription}/>
           </div>
           <button onClick = {() => this.addFoodToList()}/>
+          <div>
+            <h4>Available Stat Points</h4>
+            <h4>{this.state.statPoints}</h4>
+            <h4>strength</h4>
+            <button onClick={() => this.strengthStatDown()}>-1</button>
+            {this.state.strengthStat}
+            <button onClick={() => this.strengthStatUp()}>+1</button>
+          </div>
+          <div>
+            <h4>speed</h4>
+            <button onClick={() => this.speedStatDown()}></button>
+            {this.state.speedStat}
+            <button onClick={() => this.speedStatUp()}></button>
+          </div>
+          <div>
+            <h4>defense</h4>
+            <button onClick={() => this.defenseStatDown()}></button>
+            {this.state.defenseStat}
+            <button onClick={() => this.defenseStatUp()}></button>
+          </div>
         </div>
+        
         
 
       </div>
