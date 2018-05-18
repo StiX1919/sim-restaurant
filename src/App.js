@@ -43,9 +43,9 @@ class App extends Component {
         <div className='characterCreatorBox'>
           <h1>Create Your Character</h1>
           <div>
-            <h3>New Food Item</h3>
+            <h3>Character Name</h3>
             <input onChange = {(e) => this.addFoodItem(e)} value={this.state.newFoodItem}/>
-            <h3>Food Price</h3>
+            <h3>Job</h3>
             <input onChange = {(e) => this.addFoodPrice(e)} value={this.state.newFoodPrice}/>
             <h3>Description</h3>
             <input onChange = {(e) => this.addFoodDescripion(e)} value={this.state.newFoodDescription}/>
