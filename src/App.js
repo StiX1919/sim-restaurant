@@ -124,7 +124,7 @@ class App extends Component {
             <h3>Description</h3>
             <input onChange = {(e) => this.addFoodDescripion(e)} value={this.state.newFoodDescription}/>
           </div>
-          <button onClick = {() => this.addFoodToList()}/>
+
           <div>
             <h4>Available Stat Points</h4>
             <h4>{this.state.statPoints}</h4>
