@@ -14,6 +14,8 @@ class App extends Component {
       statPoints: 3
     }
 
+    this.getMonster = this.getMonster.bind(this)
+
     this.strengthStatUp = this.strengthStatUp.bind(this)
     this.strengthStatDown = this.strengthStatDown.bind(this)
 
@@ -25,7 +27,16 @@ class App extends Component {
 
   }
 
+  componentDidMount() {
+    this.getMonster()
+  }
 
+  getMonster() {
+    axios.get('/api/getMonster').then(response => {
+      console.log(response.data)
+      this.setState({currentMonster: response.data})
+    })
+  }
 
   addFoodItem(e) {
     this.setState({newFoodItem: e.target.value})

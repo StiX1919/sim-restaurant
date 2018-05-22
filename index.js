@@ -34,9 +34,9 @@ app.use(cors());
 // app.get('/api/getColor', (req, res) => {
 //     res.send(color)
 // })
-// app.get('/api/serverInfo', (req, res) => {
-//   res.send(startInfo)
-// })
+app.get('/api/getMonster', (req, res) => {
+  res.send(monsters[0])
+})
 // app.post('/api/addNewFoodToList', (req, res) => {
 //   startInfo.push([req.body.name, req.body.price, req.body.description])
 //   res.send(startInfo)
