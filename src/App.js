@@ -122,6 +122,15 @@ class App extends Component {
   }
 
   render() {
+    let monsterBox = (<h1>Loading Monster...</h1>)
+    if(this.state.currentMonster){
+      monsterBox = (<div>
+        <h2>{this.state.currentMonster.name}</h2>
+        <h4>{this.state.currentMonster.description}</h4>
+      </div>)
+    }
+    
+
 
     return (
       <div className="App">
@@ -157,6 +166,8 @@ class App extends Component {
             <button onClick={() => this.defenseStatUp()}></button>
           </div>
         </div>
+
+        {this.state.currentMonster && monsterBox}
         
         
 
