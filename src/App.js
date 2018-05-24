@@ -35,7 +35,7 @@ class App extends Component {
   getMonster() {
     axios.get('/api/getMonster').then(response => {
       console.log(response.data)
-      this.setState({currentMonster: response.data, currentMonsterHP: response.data.HP})
+      this.setState({currentMonster: response.data, currentMonsterHP: response.data.HP, monsterStatus: 'alive'})
     })
   }
 
@@ -128,6 +128,11 @@ class App extends Component {
     let damage = this.state.strengthStat - this.state.currentMonster.defense
     if(damage > 0){
       currMonsterHP = currMonsterHP - damage
+      if(currMonsterHP <= 0){
+        
+        this.setState({currentMonsterHp: currMonsterHP, monsterStatus: 'dead'})
+        setTimeout(this.getMonster, 3000)
+      }
       this.setState({currentMonsterHP: currMonsterHP})
     }
     
@@ -185,7 +190,8 @@ class App extends Component {
         <button onClick={() => this.attackButton()}>Attack!!</button>
 
         <div className='characterBox'>
-          {this.state.currentMonster && monsterBox}
+          {this.state.currentMonster && this.state.monsterStatus != 'dead' && monsterBox}
+          {this.state.monsterStatus === 'dead' && <h2>Monster is Dead!</h2>}
         </div>
         
 
