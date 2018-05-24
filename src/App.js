@@ -25,6 +25,7 @@ class App extends Component {
     this.defenseStatUp = this.defenseStatUp.bind(this)
     this.defenseStatDown = this.defenseStatDown.bind(this)
 
+    this.attackButton = this.attackButton.bind(this)
   }
 
   componentDidMount() {
@@ -34,7 +35,7 @@ class App extends Component {
   getMonster() {
     axios.get('/api/getMonster').then(response => {
       console.log(response.data)
-      this.setState({currentMonster: response.data})
+      this.setState({currentMonster: response.data, currentMonsterHP: response.data.HP})
     })
   }
 
@@ -121,12 +122,26 @@ class App extends Component {
     this.setState({defenseStat: oldStat, statPoints: oldPoints})
   }
 
+  attackButton(){
+    let currMonsterHP = this.state.currentMonsterHP
+
+    let damage = this.state.strengthStat - this.state.currentMonster.defense
+    if(damage > 0){
+      currMonsterHP = currMonsterHP - damage
+      this.setState({currentMonsterHP: currMonsterHP})
+    }
+    
+    console.log('currMonsterHP', currMonsterHP, damage)
+  }
+
   render() {
+
     let monsterBox = (<h1>Loading Monster...</h1>)
     if(this.state.currentMonster){
       monsterBox = (<div>
         <h2>{this.state.currentMonster.name}</h2>
         <h4>{this.state.currentMonster.description}</h4>
+        <h4>Current HP: {this.state.currentMonsterHP}</h4>
       </div>)
     }
     
@@ -134,7 +149,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className='characterCreatorBox'>
+        <div className='characterBox'>
           <h1>Create Your Character</h1>
           <div>
             <h3>Character Name</h3>
@@ -167,8 +182,11 @@ class App extends Component {
           </div>
         </div>
 
-        {this.state.currentMonster && monsterBox}
-        
+        <button onClick={() => this.attackButton()}>Attack!!</button>
+
+        <div className='characterBox'>
+          {this.state.currentMonster && monsterBox}
+        </div>
         
 
       </div>
