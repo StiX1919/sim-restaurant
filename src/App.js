@@ -8,10 +8,14 @@ class App extends Component {
   constructor(props) {
     super()
     this.state = {
+      level: 1,
+      exp: 90,
+      nextLevel: 100,
       strengthStat: 2,
       speedStat: 2,
       defenseStat: 2,
-      statPoints: 3
+      statPoints: 3,
+      monsterStatus: 'alive'
     }
 
     this.getMonster = this.getMonster.bind(this)
@@ -33,21 +37,30 @@ class App extends Component {
   }
 
   getMonster() {
+    let currExp = this.state.exp
+    let currLvl = this.state.level
+    let currNxtLvl = this.state.nextLevel    
+    let currStatPoints = this.state.statPoints
+    let nextLvlModifier = ((this.state.level+1) * .1) + 1
+
+    if(this.state.monsterStatus === 'dead'){
+      currExp += this.state.currentMonster.expValue
+    }
+    
     axios.get('/api/getMonster').then(response => {
       console.log(response.data)
-      this.setState({currentMonster: response.data, currentMonsterHP: response.data.HP, monsterStatus: 'alive'})
+      this.setState({currentMonster: response.data, currentMonsterHP: response.data.HP, monsterStatus: 'alive', exp: currExp})
+      if(this.state.exp >= this.state.nextLevel){
+        currExp = 0
+        currLvl += 1
+        currStatPoints += 2
+        currNxtLvl *= nextLvlModifier
+
+        this.setState({exp: currExp, level: currLvl, nextLevel: currNxtLvl, statPoints: currStatPoints})
+      }
     })
   }
 
-  addFoodItem(e) {
-    this.setState({newFoodItem: e.target.value})
-  }
-  addFoodPrice(e) {
-    this.setState({newFoodPrice: e.target.value})
-  }
-  addFoodDescripion(e) {
-    this.setState({newFoodDescription: e.target.value})
-  }
 
   addFoodToList() {
     if(this.state.newFoodItem && this.state.newFoodPrice && this.state.newFoodDescription){
@@ -126,17 +139,21 @@ class App extends Component {
     let currMonsterHP = this.state.currentMonsterHP
 
     let damage = this.state.strengthStat - this.state.currentMonster.defense
-    if(damage > 0){
-      currMonsterHP = currMonsterHP - damage
-      if(currMonsterHP <= 0){
-        
-        this.setState({currentMonsterHp: currMonsterHP, monsterStatus: 'dead'})
-        setTimeout(this.getMonster, 3000)
+    if(this.state.monsterStatus != 'dead'){
+      if(damage > 0){
+        currMonsterHP = currMonsterHP - damage
+        if(currMonsterHP <= 0){
+  
+          this.setState({currentMonsterHp: currMonsterHP, monsterStatus: 'dead'})
+          setTimeout(this.getMonster, 2000)
+        }
+        this.setState({currentMonsterHP: currMonsterHP})
       }
-      this.setState({currentMonsterHP: currMonsterHP})
+      
+      console.log('currMonsterHP', currMonsterHP, damage)
     }
+
     
-    console.log('currMonsterHP', currMonsterHP, damage)
   }
 
   render() {
@@ -158,11 +175,11 @@ class App extends Component {
           <h1>Create Your Character</h1>
           <div>
             <h3>Character Name</h3>
-            <input onChange = {(e) => this.addFoodItem(e)} value={this.state.newFoodItem}/>
+            <input />
             <h3>Job</h3>
-            <input onChange = {(e) => this.addFoodPrice(e)} value={this.state.newFoodPrice}/>
-            <h3>Description</h3>
-            <input onChange = {(e) => this.addFoodDescripion(e)} value={this.state.newFoodDescription}/>
+            <input />
+            <h4>Level: {this.state.level}</h4>
+            <h4>EXP: {this.state.exp}/{this.state.nextLevel}</h4>
           </div>
 
           <div>
