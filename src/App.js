@@ -9,7 +9,7 @@ class App extends Component {
     super()
     this.state = {
       level: 1,
-      exp: 90,
+      exp: 10,
       nextLevel: 100,
       strengthStat: 2,
       speedStat: 2,

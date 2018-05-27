@@ -9,7 +9,7 @@ const port = 3000;
 
 const app = express();
 
-let monsters = [{name: 'Slime', description: 'A small slime, early adventurers thrive off these.', HP: 10, strength: 1, defense: 3, speed: 2, expValue: 100}]
+let monsters = [{name: 'Slime', description: 'A small slime, early adventurers thrive off these.', HP: 10, strength: 1, defense: 3, speed: 2, expValue: 10}]
 
 //SAVED FOR BUILD
 //app.use(express.static(`${__dirname}/public/build`));
