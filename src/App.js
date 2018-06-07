@@ -204,7 +204,10 @@ class App extends Component {
           </div>
         </div>
 
-        <button onClick={() => this.attackButton()}>Attack!!</button>
+        <button onClick={() => this.attackButton()}>Attack</button>
+        <button onClick={() => this.attackButton()}>Defend</button>
+        <button onClick={() => this.attackButton()}>Spells</button>
+        <button onClick={() => this.attackButton()}>Skills</button>
 
         <div className='characterBox'>
           {this.state.currentMonster && this.state.monsterStatus != 'dead' && monsterBox}
