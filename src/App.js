@@ -5,6 +5,8 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import './App.css';
 
+import { runTest } from './ducks/reducer'
+
 
 class App extends Component {
   constructor(props) {
@@ -216,6 +218,11 @@ class App extends Component {
         <div className='characterBox'>
           {this.state.currentMonster && this.state.monsterStatus != 'dead' && monsterBox}
           {this.state.monsterStatus === 'dead' && <h2>Monster is Dead!</h2>}
+          {this.props.testNum}
+
+          
+          <button onClick={() => this.props.runTest(1)}>+1</button>
+          <button onClick={() => this.props.runTest(2)}>+2</button>
         </div>
         
 
@@ -226,4 +233,4 @@ class App extends Component {
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, {runTest})(App);
