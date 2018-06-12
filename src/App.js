@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import axios from 'axios'
+
+import {connect} from 'react-redux'
 import './App.css';
 
 
@@ -86,7 +88,7 @@ class App extends Component {
     let oldStat = this.state.strengthStat
     let oldPoints = this.state.statPoints
 
-    if(oldStat > 1){
+    if(oldStat > 2){
       oldStat -= 1
       oldPoints += 1
     }
@@ -107,7 +109,7 @@ class App extends Component {
     let oldStat = this.state.speedStat
     let oldPoints = this.state.statPoints
 
-    if(oldStat > 1){
+    if(oldStat > 2){
       oldStat -= 1
       oldPoints += 1
     }
@@ -128,7 +130,7 @@ class App extends Component {
     let oldStat = this.state.defenseStat
     let oldPoints = this.state.statPoints
 
-    if(oldStat > 1){
+    if(oldStat > 2){
       oldStat -= 1
       oldPoints += 1
     }
@@ -222,4 +224,6 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => state
+
+export default connect(mapStateToProps)(App);
