@@ -3,13 +3,14 @@ import axios from "axios";
 //Action Constants
 const TEST_RUN = "TEST_RUN"
 
+const GET_MONSTER = "GET_MONSTER"
 
 
 //Initial State
 
 const initialState = {
-    testNum: 0
-    
+    testNum: 0,
+    monsterStatus: 'alive'
 }
 
 
@@ -20,6 +21,19 @@ export function runTest(num) {
         payload: num
     }
 }
+
+export function getMonster() {
+    return {
+        type: GET_MONSTER,
+        payload: axios.get('/api/getMonster').then(response => {
+            console.log(response.data)
+            return response.data
+            // this.setState({currentMonster: response.data, currentMonsterHP: response.data.HP, monsterStatus: 'alive', exp: currExp})
+            
+          })
+    }
+    
+  }
 
 
 
@@ -36,6 +50,16 @@ export default function reducer(state=initialState, action) {
             testNum: action.payload
         })
 
+        case GET_MONSTER + "_PENDING":
+        return Object.assign({}, state, {
+            isLoading: true
+        })
+        case GET_MONSTER + "_FULFILLED":
+        return Object.assign({}, state, {
+            isLoading: false,
+            currentMonster: action.payload,
+            monsterHP: action.payload.HP
+        })
         default:
             return state
     }

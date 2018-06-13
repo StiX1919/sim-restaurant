@@ -5,7 +5,11 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import './App.css';
 
-import { runTest } from './ducks/reducer'
+import MonsterBox from './Components/MonsterBox/MonsterBox'
+
+import { runTest,
+          getMonster
+        } from './ducks/reducer'
 
 
 class App extends Component {
@@ -19,10 +23,8 @@ class App extends Component {
       speedStat: 2,
       defenseStat: 2,
       statPoints: 3,
-      monsterStatus: 'alive'
+      
     }
-
-    this.getMonster = this.getMonster.bind(this)
 
     this.strengthStatUp = this.strengthStatUp.bind(this)
     this.strengthStatDown = this.strengthStatDown.bind(this)
@@ -37,32 +39,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getMonster()
-  }
-
-  getMonster() {
-    let currExp = this.state.exp
-    let currLvl = this.state.level
-    let currNxtLvl = this.state.nextLevel    
-    let currStatPoints = this.state.statPoints
-    let nextLvlModifier = ((this.state.level+1) * .1) + 1
-
-    if(this.state.monsterStatus === 'dead'){
-      currExp += this.state.currentMonster.expValue
-    }
-    
-    axios.get('/api/getMonster').then(response => {
-      console.log(response.data)
-      this.setState({currentMonster: response.data, currentMonsterHP: response.data.HP, monsterStatus: 'alive', exp: currExp})
-      if(this.state.exp >= this.state.nextLevel){
-        currExp = 0
-        currLvl += 1
-        currStatPoints += 2
-        currNxtLvl *= nextLvlModifier
-
-        this.setState({exp: currExp, level: currLvl, nextLevel: currNxtLvl, statPoints: currStatPoints})
-      }
-    })
+    this.props.getMonster()
   }
 
 
@@ -162,16 +139,6 @@ class App extends Component {
 
   render() {
 
-    let monsterBox = (<h1>Loading Monster...</h1>)
-    if(this.state.currentMonster){
-      monsterBox = (<div>
-        <h2>{this.state.currentMonster.name}</h2>
-        <h4>{this.state.currentMonster.description}</h4>
-        <h4>Current HP: {this.state.currentMonsterHP}</h4>
-      </div>)
-    }
-    
-
 
     return (
       <div className="App">
@@ -216,8 +183,8 @@ class App extends Component {
         </div>
 
         <div className='characterBox'>
-          {this.state.currentMonster && this.state.monsterStatus != 'dead' && monsterBox}
-          {this.state.monsterStatus === 'dead' && <h2>Monster is Dead!</h2>}
+          {this.props.currentMonster && this.props.monsterStatus != 'dead' && <MonsterBox />}
+          {this.props.monsterStatus === 'dead' && <h2>Monster is Dead!</h2>}
           {this.props.testNum}
 
           
@@ -233,4 +200,4 @@ class App extends Component {
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {runTest})(App);
+export default connect(mapStateToProps, {runTest, getMonster})(App);
