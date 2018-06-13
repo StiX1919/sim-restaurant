@@ -22,7 +22,7 @@ class StatBox extends Component {
                 
                 {this.props.currStat}
                 {this.props.statsLeft > 0 &&
-                    <button onClick={() => this.props.statModifier('+', this.props.mod)}>{'>'}</button>
+                    <button onClick={() => this.props.statModifier('+', this.props.mod, this.props.currStat, this.props.statsLeft)}>{'>'}</button>
                 }
                 
             </div>

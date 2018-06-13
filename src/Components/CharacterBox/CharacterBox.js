@@ -6,6 +6,8 @@ import './CharacterBox.css';
 
 import StatBox from '../StatBox/StatBox'
 
+import {statModifier} from '../../ducks/reducer'
+
 class CharacterBox extends Component {
     constructor(){
         super()
@@ -20,7 +22,6 @@ class CharacterBox extends Component {
         }
 
         this.statModifier = this.statModifier.bind(this)
-
 
     }
 
@@ -91,14 +92,14 @@ class CharacterBox extends Component {
                     <input />
                     <h3>Job</h3>
                     <input />
-                    <h4>Level: {this.state.level}</h4>
-                    <h4>EXP: {this.state.exp}/{this.state.nextLevel}</h4>
+                    <h4>Level: {this.props.level}</h4>
+                    <h4>EXP: {this.props.exp}/{this.props.nextLevel}</h4>
                     <h4>Available Stat Points</h4>
-                    <h4>{this.state.statPoints}</h4>
+                    <h4>{this.props.statPoints}</h4>
                 </div>
-                <StatBox statType='Strength' statModifier={this.statModifier} currStat={this.state.strengthStat} mod={'pwr'} statsLeft={this.state.statPoints}/>
-                <StatBox statType='Speed' statModifier={this.statModifier} currStat={this.state.speedStat} mod={'spd'} statsLeft={this.state.statPoints}/>
-                <StatBox statType='Defense' statModifier={this.statModifier} currStat={this.state.defenseStat} mod={'def'} statsLeft={this.state.statPoints}/>
+                <StatBox statType='Strength' statModifier={this.props.statModifier} currStat={this.props.strengthStat} mod={'pwr'} statsLeft={this.props.statPoints}/>
+                <StatBox statType='Speed' statModifier={this.props.statModifier} currStat={this.props.speedStat} mod={'spd'} statsLeft={this.props.statPoints}/>
+                <StatBox statType='Defense' statModifier={this.props.statModifier} currStat={this.props.defenseStat} mod={'def'} statsLeft={this.props.statPoints}/>
                 
             </div>
         )
@@ -107,4 +108,4 @@ class CharacterBox extends Component {
 }   
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {})(CharacterBox);
+export default connect(mapStateToProps, {statModifier})(CharacterBox);

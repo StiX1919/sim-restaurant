@@ -30,7 +30,7 @@ class App extends Component {
   
 
   attackButton(){
-    let currMonsterHP = this.state.currentMonsterHP
+    let currMonsterHP = this.props.monsterHP
 
     let damage = this.state.strengthStat - this.state.currentMonster.defense
     if(this.state.monsterStatus != 'dead'){
@@ -69,7 +69,6 @@ class App extends Component {
         <div className='characterBox'>
           {this.props.currentMonster && this.props.monsterStatus != 'dead' && <MonsterBox />}
           {this.props.monsterStatus === 'dead' && <h2>Monster is Dead!</h2>}
-          {this.props.testNum}
 
         </div>
         
