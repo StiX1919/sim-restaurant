@@ -10,17 +10,26 @@ const GET_MONSTER = "GET_MONSTER"
 
 const initialState = {
     testNum: 0,
-    monsterStatus: 'alive'
+    // character info
+    level: 1,
+    exp: 0,
+    nextLevel: 100,
+    strengthStat: 2,
+    speedStat: 2,
+    defenseStat: 2,
+    statPoints: 3,
+
+    
+    // monster info
+    monsterStatus: 'alive',
+    currentMonster: null,
+    monsterHP: null
+
+
 }
 
 
 //Action Creators
-export function runTest(num) {
-    return {
-        type: TEST_RUN,
-        payload: num
-    }
-}
 
 export function getMonster() {
     return {
@@ -43,12 +52,6 @@ export function getMonster() {
 
 export default function reducer(state=initialState, action) {
     switch(action.type) {
-        case TEST_RUN:
-        return Object.assign({}, state, {
-            
-            isLoading: false,
-            testNum: action.payload
-        })
 
         case GET_MONSTER + "_PENDING":
         return Object.assign({}, state, {
