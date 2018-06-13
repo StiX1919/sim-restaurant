@@ -4,6 +4,8 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import './CharacterBox.css';
 
+import StatBox from '../StatBox/StatBox'
+
 class CharacterBox extends Component {
     constructor(){
         super()
@@ -91,28 +93,13 @@ class CharacterBox extends Component {
                     <input />
                     <h4>Level: {this.state.level}</h4>
                     <h4>EXP: {this.state.exp}/{this.state.nextLevel}</h4>
-                </div>
-  
-                <div>
                     <h4>Available Stat Points</h4>
                     <h4>{this.state.statPoints}</h4>
-                    <h4>strength</h4>
-                    <button onClick={() => this.statModifier('-', 'pwr')}>{'<'}</button>
-                    {this.state.strengthStat}
-                    <button onClick={() => this.statModifier('+', 'pwr')}>{'>'}</button>
                 </div>
-                <div>
-                    <h4>speed</h4>
-                    <button onClick={() => this.statModifier('-', 'spd')}>{'<'}</button>
-                    {this.state.speedStat}
-                    <button onClick={() => this.statModifier('+', 'spd')}>{'>'}</button>
-                </div>
-                <div>
-                    <h4>defense</h4>
-                    <button onClick={() => this.statModifier('-', 'def')}>{'<'}</button>
-                    {this.state.defenseStat}
-                    <button onClick={() => this.statModifier('+', 'def')}>{'>'}</button>
-                </div>
+                <StatBox statType='Strength' statModifier={this.statModifier} currStat={this.state.strengthStat} mod={'pwr'} statsLeft={this.state.statPoints}/>
+                <StatBox statType='Speed' statModifier={this.statModifier} currStat={this.state.speedStat} mod={'spd'} statsLeft={this.state.statPoints}/>
+                <StatBox statType='Defense' statModifier={this.statModifier} currStat={this.state.defenseStat} mod={'def'} statsLeft={this.state.statPoints}/>
+                
             </div>
         )
     }
