@@ -17,80 +17,68 @@ class CharacterBox extends Component {
             statPoints: 3,
         }
 
-        this.strengthStatUp = this.strengthStatUp.bind(this)
-        this.strengthStatDown = this.strengthStatDown.bind(this)
-    
-        this.speedStatUp = this.speedStatUp.bind(this)
-        this.speedStatDown = this.speedStatDown.bind(this)
-    
-        this.defenseStatUp = this.defenseStatUp.bind(this)
-        this.defenseStatDown = this.defenseStatDown.bind(this)
-    
+        this.statModifier = this.statModifier.bind(this)
+
 
     }
 
-    strengthStatUp(){
-        let oldStat = this.state.strengthStat
-        let oldPoints = this.state.statPoints
-    
-        if(this.state.statPoints > 0){
-          oldStat += 1
-          oldPoints -= 1
+    statModifier(direc, type){
+        if(type === 'pwr'){
+            let oldStat = this.state.strengthStat
+            let oldPoints = this.state.statPoints
+            if(direc === '+'){
+                if(this.state.statPoints > 0){
+                    oldStat += 1
+                    oldPoints -= 1
+                  }
+            }
+            else {
+                if(oldStat > 2){
+                    oldStat -= 1
+                    oldPoints += 1
+                  }
+            }
+            
+            this.setState({strengthStat: oldStat, statPoints: oldPoints})
         }
-        this.setState({strengthStat: oldStat, statPoints: oldPoints})
-      }
-      strengthStatDown(){
-        let oldStat = this.state.strengthStat
-        let oldPoints = this.state.statPoints
-    
-        if(oldStat > 2){
-          oldStat -= 1
-          oldPoints += 1
+        else if(type === 'spd') {
+            let oldStat = this.state.speedStat
+            let oldPoints = this.state.statPoints
+            if(direc === '+'){
+                if(this.state.statPoints > 0){
+                    oldStat += 1
+                    oldPoints -= 1
+                  }
+            }
+            else {
+                if(oldStat > 2){
+                    oldStat -= 1
+                    oldPoints += 1
+                  }
+            }
+            
+            this.setState({speedStat: oldStat, statPoints: oldPoints})
         }
-        this.setState({strengthStat: oldStat, statPoints: oldPoints})
-      }
-    
-      speedStatUp(){
-        let oldStat = this.state.speedStat
-        let oldPoints = this.state.statPoints
-    
-        if(this.state.statPoints > 0){
-          oldStat += 1
-          oldPoints -= 1
+        else if(type === 'def') {
+            let oldStat = this.state.defenseStat
+            let oldPoints = this.state.statPoints
+            if(direc === '+'){
+                if(this.state.statPoints > 0){
+                    oldStat += 1
+                    oldPoints -= 1
+                  }
+            }
+            else {
+                if(oldStat > 2){
+                    oldStat -= 1
+                    oldPoints += 1
+                  }
+            }
+            
+            this.setState({defenseStat: oldStat, statPoints: oldPoints})
         }
-        this.setState({speedStat: oldStat, statPoints: oldPoints})
       }
-      speedStatDown(){
-        let oldStat = this.state.speedStat
-        let oldPoints = this.state.statPoints
-    
-        if(oldStat > 2){
-          oldStat -= 1
-          oldPoints += 1
-        }
-        this.setState({speedStat: oldStat, statPoints: oldPoints})
-      }
-    
-      defenseStatUp(){
-        let oldStat = this.state.defenseStat
-        let oldPoints = this.state.statPoints
-    
-        if(this.state.statPoints > 0){
-          oldStat += 1
-          oldPoints -= 1
-        }
-        this.setState({defenseStat: oldStat, statPoints: oldPoints})
-      }
-      defenseStatDown(){
-        let oldStat = this.state.defenseStat
-        let oldPoints = this.state.statPoints
-    
-        if(oldStat > 2){
-          oldStat -= 1
-          oldPoints += 1
-        }
-        this.setState({defenseStat: oldStat, statPoints: oldPoints})
-      }
+      
 
     render() {
         return (
@@ -101,7 +89,7 @@ class CharacterBox extends Component {
                     <input />
                     <h3>Job</h3>
                     <input />
-                    <h4>Level: {this.props.level}</h4>
+                    <h4>Level: {this.state.level}</h4>
                     <h4>EXP: {this.state.exp}/{this.state.nextLevel}</h4>
                 </div>
   
@@ -109,21 +97,21 @@ class CharacterBox extends Component {
                     <h4>Available Stat Points</h4>
                     <h4>{this.state.statPoints}</h4>
                     <h4>strength</h4>
-                    <button onClick={() => this.strengthStatDown()}>-1</button>
+                    <button onClick={() => this.statModifier('-', 'pwr')}>{'<'}</button>
                     {this.state.strengthStat}
-                    <button onClick={() => this.strengthStatUp()}>+1</button>
+                    <button onClick={() => this.statModifier('+', 'pwr')}>{'>'}</button>
                 </div>
                 <div>
                     <h4>speed</h4>
-                    <button onClick={() => this.speedStatDown()}></button>
+                    <button onClick={() => this.statModifier('-', 'spd')}>{'<'}</button>
                     {this.state.speedStat}
-                    <button onClick={() => this.speedStatUp()}></button>
+                    <button onClick={() => this.statModifier('+', 'spd')}>{'>'}</button>
                 </div>
                 <div>
                     <h4>defense</h4>
-                    <button onClick={() => this.defenseStatDown()}></button>
+                    <button onClick={() => this.statModifier('-', 'def')}>{'<'}</button>
                     {this.state.defenseStat}
-                    <button onClick={() => this.defenseStatUp()}></button>
+                    <button onClick={() => this.statModifier('+', 'def')}>{'>'}</button>
                 </div>
             </div>
         )

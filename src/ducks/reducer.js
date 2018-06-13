@@ -11,15 +11,9 @@ const GET_MONSTER = "GET_MONSTER"
 const initialState = {
     testNum: 0,
     // character info
-    level: 1,
-    exp: 0,
-    nextLevel: 100,
-    strengthStat: 2,
-    speedStat: 2,
-    defenseStat: 2,
-    statPoints: 3,
-
     
+
+
     // monster info
     monsterStatus: 'alive',
     currentMonster: null,
