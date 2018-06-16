@@ -6,7 +6,8 @@ import './CharacterBox.css';
 
 import StatBox from '../StatBox/StatBox'
 
-import {statModifier} from '../../ducks/reducer'
+import {statModifier,
+        levelUp} from '../../ducks/reducer'
 
 class CharacterBox extends Component {
     constructor(){
@@ -21,71 +22,14 @@ class CharacterBox extends Component {
             statPoints: 3,
         }
 
-        this.statModifier = this.statModifier.bind(this)
 
     }
 
-    statModifier(direc, type){
-        if(type === 'pwr'){
-            let oldStat = this.state.strengthStat
-            let oldPoints = this.state.statPoints
-            if(direc === '+'){
-                if(this.state.statPoints > 0){
-                    oldStat += 1
-                    oldPoints -= 1
-                  }
-            }
-            else {
-                if(oldStat > 2){
-                    oldStat -= 1
-                    oldPoints += 1
-                  }
-            }
-            
-            this.setState({strengthStat: oldStat, statPoints: oldPoints})
-        }
-        else if(type === 'spd') {
-            let oldStat = this.state.speedStat
-            let oldPoints = this.state.statPoints
-            if(direc === '+'){
-                if(this.state.statPoints > 0){
-                    oldStat += 1
-                    oldPoints -= 1
-                  }
-            }
-            else {
-                if(oldStat > 2){
-                    oldStat -= 1
-                    oldPoints += 1
-                  }
-            }
-            
-            this.setState({speedStat: oldStat, statPoints: oldPoints})
-        }
-        else if(type === 'def') {
-            let oldStat = this.state.defenseStat
-            let oldPoints = this.state.statPoints
-            if(direc === '+'){
-                if(this.state.statPoints > 0){
-                    oldStat += 1
-                    oldPoints -= 1
-                  }
-            }
-            else {
-                if(oldStat > 2){
-                    oldStat -= 1
-                    oldPoints += 1
-                  }
-            }
-            
-            this.setState({defenseStat: oldStat, statPoints: oldPoints})
-        }
-      }
       
 
     render() {
         return (
-            <div>
+            <div className='mainBox'>
                 <h1>Create Your Character</h1>
                 <div>
                     <h3>Character Name</h3>
@@ -93,6 +37,9 @@ class CharacterBox extends Component {
                     <h3>Job</h3>
                     <input />
                     <h4>Level: {this.props.level}</h4>
+                    {this.props.exp >= this.props.nextLevel &&
+                        <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.statPoints)}>Level Up</button>
+                    }
                     <h4>EXP: {this.props.exp}/{this.props.nextLevel}</h4>
                     <h4>Available Stat Points</h4>
                     <h4>{this.props.statPoints}</h4>
@@ -108,4 +55,4 @@ class CharacterBox extends Component {
 }   
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {statModifier})(CharacterBox);
+export default connect(mapStateToProps, {statModifier, levelUp})(CharacterBox);

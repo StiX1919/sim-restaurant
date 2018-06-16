@@ -9,6 +9,7 @@ import CharacterBox from './Components/CharacterBox/CharacterBox'
 import MonsterBox from './Components/MonsterBox/MonsterBox'
 
 import { getMonster,
+          attack,
         } from './ducks/reducer'
 
 
@@ -20,32 +21,38 @@ class App extends Component {
     }
 
     this.attackButton = this.attackButton.bind(this)
+
   }
 
   componentDidMount() {
     this.props.getMonster()
   }
+ 
 
 
   
 
-  attackButton(){
-    let currMonsterHP = this.props.monsterHP
+  attackButton(HP, userStr, monDef, monStatus, monExp, currExp){
+    console.log('teststats', HP, userStr, monDef, monStatus, monExp, currExp)
+    this.props.attack(HP, userStr, monDef, monStatus, monExp, currExp)
 
-    let damage = this.state.strengthStat - this.state.currentMonster.defense
-    if(this.state.monsterStatus != 'dead'){
-      if(damage > 0){
-        currMonsterHP = currMonsterHP - damage
-        if(currMonsterHP <= 0){
+    
+    // let currMonsterHP = this.props.monsterHP
+
+    // let damage = this.props.strengthStat - this.props.currentMonster.defense
+    // if(this.props.monsterStatus != 'dead'){
+    //   if(damage > 0){
+    //     currMonsterHP = currMonsterHP - damage
+    //     if(currMonsterHP <= 0){
   
-          this.setState({currentMonsterHp: currMonsterHP, monsterStatus: 'dead'})
-          setTimeout(this.getMonster, 2000)
-        }
-        this.setState({currentMonsterHP: currMonsterHP})
-      }
+    //       this.setState({currentMonsterHp: currMonsterHP, monsterStatus: 'dead'})
+    //       setTimeout(this.getMonster, 2000)
+    //     }
+    //     this.setState({currentMonsterHP: currMonsterHP})
+    //   }
       
-      console.log('currMonsterHP', currMonsterHP, damage)
-    }
+    //   console.log('currMonsterHP', currMonsterHP, damage)
+    // }
 
     
   }
@@ -55,24 +62,28 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className='characterBox'>
-          <CharacterBox />
-        </div>
-
+        <CharacterBox />
+        
         <div className="attacks">
-          <button className="attackButtons" onClick={() => this.attackButton()}>Attack</button>
-          <button className="attackButtons" onClick={() => this.attackButton()}>Defend</button>
-          <button className="attackButtons" onClick={() => this.attackButton()}>Spells</button>
-          <button className="attackButtons" onClick={() => this.attackButton()}>Skills</button>
+          {this.props.monsterStatus != 'dead' &&
+            <button className="attackButtons" onClick={() => this.attackButton(this.props.monsterHP, 
+                                                                                this.props.strengthStat, 
+                                                                                this.props.currentMonster.defense, 
+                                                                                this.props.monsterStatus, 
+                                                                                this.props.currentMonster.expValue,
+                                                                                this.props.exp)}>Attack</button>
+          }
+          {this.props.monsterStatus === 'dead' &&
+            <button onClick={() => this.props.getMonster()} >New Monster</button>
+          }
         </div>
 
-        <div className='characterBox'>
+
+        <div>
           {this.props.currentMonster && this.props.monsterStatus != 'dead' && <MonsterBox />}
           {this.props.monsterStatus === 'dead' && <h2>Monster is Dead!</h2>}
-
         </div>
         
-
       </div>
     );
   }
@@ -80,4 +91,4 @@ class App extends Component {
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, { getMonster })(App);
+export default connect(mapStateToProps, { getMonster, attack })(App);

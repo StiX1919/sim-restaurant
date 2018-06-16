@@ -1,0 +1,10 @@
+.mainBox {
+    width: 400px;
+    height: 300px;
+    border: solid black 2px;
+}
+
+.monsterImg {
+    height: 100px;
+    width: 100px;
+}

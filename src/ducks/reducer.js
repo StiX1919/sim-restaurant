@@ -1,12 +1,14 @@
 import axios from "axios";
+import { runInNewContext } from "vm";
 
 //Action Constants
-const TEST_RUN = "TEST_RUN"
 
 const GET_MONSTER = "GET_MONSTER"
 
+const LEVEL_UP = "LEVEL_UP"
 const STAT_MODIFIER = "STAT_MODIFIER"
 
+const ATTACKING = "ATTACKING"
 
 //Initial State
 
@@ -45,6 +47,24 @@ export function getMonster() {
     }
     
   }
+
+export function levelUp(exp, level, nextLevel, currPoints){
+    
+    let newLevel = level += 1
+
+    let nextLevelMod = 1 + newLevel/10
+
+    let newExp = exp - nextLevel
+    let newNextLevel = Math.floor(nextLevel * nextLevelMod)
+    let newPoint = currPoints += 1
+
+    return {
+        type: LEVEL_UP,
+        payload: {
+            newLevel, newExp, newNextLevel, newPoint
+        }
+    }
+}
 
 export function statModifier(direc, type, currStat, currPoints) {
     if(type === 'pwr'){
@@ -114,6 +134,37 @@ export function statModifier(direc, type, currStat, currPoints) {
 }
 
 
+export function attack(HP, userStr, monDef, monStatus, monExp, currExp) {
+    let currMonsterHP = HP
+    
+    let damage = userStr - monDef
+    let newExp = currExp + monExp
+    if(monStatus != 'dead'){
+        if(damage > 0){
+            currMonsterHP = currMonsterHP - damage
+            if(currMonsterHP <= 0){
+      
+                return {
+                    type: ATTACKING,
+                    payload: {currMonsterHP, newStatus: 'dead', exp: newExp}
+                }
+            }
+            return {
+                type: ATTACKING,
+                payload: {currMonsterHP, newStatus: 'alive', exp: currExp}
+            }
+          }
+          return {
+            type: ATTACKING,
+            payload: {currMonsterHP: HP, newStatus: 'alive', exp: currExp}
+          }
+          
+          console.log('currMonsterHP', currMonsterHP, damage)
+        }
+    
+        
+}
+
 
 
 
@@ -130,9 +181,18 @@ export default function reducer(state=initialState, action) {
             return Object.assign({}, state, {
                 isLoading: false,
                 currentMonster: action.payload,
-                monsterHP: action.payload.HP
+                monsterHP: action.payload.HP,
+                monsterStatus: 'alive'
             });
 
+        case LEVEL_UP: {
+            return Object.assign({}, state, {
+                level: action.payload.newLevel,
+                exp: action.payload.newExp,
+                nextLevel: action.payload.newNextLevel,
+                statPoints: action.payload.newPoint
+            })
+        }
         case STAT_MODIFIER:
             if(action.payload.type === 'pwr') {
                 return Object.assign({}, state, {
@@ -151,7 +211,14 @@ export default function reducer(state=initialState, action) {
                     defenseStat: action.payload.newStat,
                     statPoints: action.payload.newPoints
                 });
-            }
+            };
+        case ATTACKING:
+            return Object.assign({}, state, {
+                monsterHP: action.payload.currMonsterHP,
+                monsterStatus: action.payload.newStatus,
+                exp: action.payload.exp
+            })
+
         default:
             return state
     }

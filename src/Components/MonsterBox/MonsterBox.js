@@ -16,8 +16,9 @@ class MonsterBox extends Component {
 
     render() {
         return (
-            <div>
+            <div className='mainBox'>
                 <h2>{this.props.currentMonster.name}</h2>
+                <img className='monsterImg' src={this.props.currentMonster.image}/>
                 <h4>{this.props.currentMonster.description}</h4>
                 <h4>Current HP: {this.props.monsterHP}</h4>
             </div>
