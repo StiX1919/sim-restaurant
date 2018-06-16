@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import axios from 'axios'
+// import axios from 'axios'
 
 import {connect} from 'react-redux'
 import './App.css';
@@ -65,7 +64,7 @@ class App extends Component {
         <CharacterBox />
         
         <div className="attacks">
-          {this.props.monsterStatus != 'dead' &&
+          {this.props.monsterStatus !== 'dead' &&
             <button className="attackButtons" onClick={() => this.attackButton(this.props.monsterHP, 
                                                                                 this.props.strengthStat, 
                                                                                 this.props.currentMonster.defense, 
@@ -80,7 +79,7 @@ class App extends Component {
 
 
         <div>
-          {this.props.currentMonster && this.props.monsterStatus != 'dead' && <MonsterBox />}
+          {this.props.currentMonster && this.props.monsterStatus !== 'dead' && <MonsterBox />}
           {this.props.monsterStatus === 'dead' && <h2>Monster is Dead!</h2>}
         </div>
         

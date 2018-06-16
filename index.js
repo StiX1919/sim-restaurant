@@ -11,7 +11,7 @@ const port = 3000;
 
 const app = express();
 
-let monsters = [{name: 'Slime', description: 'A small slime, early adventurers thrive off these.', HP: 10, strength: 1, defense: 3, speed: 2, expValue: 10, image: 'https://s1.piq.land/2013/09/19/2AOhDLaZ7IQUDd0y9av9GDgB_400x400.png'},
+let monsters = [{name: 'Slime', description: 'A small slime, early adventurers thrive off these.', HP: 10, strength: 1, defense: 3, speed: 2, expValue: 10, image: 'http://www.realfast.dk/wp-content/uploads/2017/01/slime-jump.gif'},
 {name: 'Small Goblin', description: 'Small green creature. Not usually feared unless in groups.', HP: 10, strength: 2, defense: 1, speed: 3, expValue: 12, image: 'https://opengameart.org/sites/default/files/Goblin_idle.gif'}]
 
 //SAVED FOR BUILD

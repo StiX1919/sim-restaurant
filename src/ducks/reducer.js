@@ -1,5 +1,4 @@
 import axios from "axios";
-import { runInNewContext } from "vm";
 
 //Action Constants
 
@@ -139,7 +138,7 @@ export function attack(HP, userStr, monDef, monStatus, monExp, currExp) {
     
     let damage = userStr - monDef
     let newExp = currExp + monExp
-    if(monStatus != 'dead'){
+    if(monStatus !== 'dead'){
         if(damage > 0){
             currMonsterHP = currMonsterHP - damage
             if(currMonsterHP <= 0){
@@ -158,8 +157,6 @@ export function attack(HP, userStr, monDef, monStatus, monExp, currExp) {
             type: ATTACKING,
             payload: {currMonsterHP: HP, newStatus: 'alive', exp: currExp}
           }
-          
-          console.log('currMonsterHP', currMonsterHP, damage)
         }
     
         
@@ -211,7 +208,7 @@ export default function reducer(state=initialState, action) {
                     defenseStat: action.payload.newStat,
                     statPoints: action.payload.newPoints
                 });
-            };
+            } else break
         case ATTACKING:
             return Object.assign({}, state, {
                 monsterHP: action.payload.currMonsterHP,
