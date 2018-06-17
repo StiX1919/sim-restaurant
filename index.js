@@ -14,6 +14,8 @@ const app = express();
 let monsters = [{name: 'Slime', description: 'A small slime, early adventurers thrive off these.', HP: 10, strength: 1, defense: 3, speed: 2, expValue: 10, image: 'http://www.realfast.dk/wp-content/uploads/2017/01/slime-jump.gif'},
 {name: 'Small Goblin', description: 'Small green creature. Not usually feared unless in groups.', HP: 10, strength: 2, defense: 1, speed: 3, expValue: 12, image: 'https://opengameart.org/sites/default/files/Goblin_idle.gif'}]
 
+let shop = [{name: 'knife', pwr: 1, spd: 1, def: null, price: 10}]
+
 //SAVED FOR BUILD
 //app.use(express.static(`${__dirname}/public/build`));
 //
@@ -41,10 +43,9 @@ app.get('/api/getMonster', (req, res) => {
   var item = monsters[Math.floor(Math.random()*monsters.length)]
   res.send(item)
 })
-// app.post('/api/addNewFoodToList', (req, res) => {
-//   startInfo.push([req.body.name, req.body.price, req.body.description])
-//   res.send(startInfo)
-// })
+app.get('/api/getShop', (req, res) => {
+  res.send(shop)
+})
 
 //LISTENING
 app.listen(port, () => {

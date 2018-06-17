@@ -41,8 +41,8 @@ class CharacterBox extends Component {
                         <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.statPoints)}>Level Up</button>
                     }
                     <h4>EXP: {this.props.exp}/{this.props.nextLevel}</h4>
-                    <h4>Available Stat Points</h4>
-                    <h4>{this.props.statPoints}</h4>
+                    <h4>Available Stat Points: {this.props.statPoints}</h4>
+                    
                 </div>
                 <StatBox statType='Strength' statModifier={this.props.statModifier} currStat={this.props.strengthStat} mod={'pwr'} statsLeft={this.props.statPoints}/>
                 <StatBox statType='Speed' statModifier={this.props.statModifier} currStat={this.props.speedStat} mod={'spd'} statsLeft={this.props.statPoints}/>

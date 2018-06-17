@@ -6,20 +6,21 @@ import './App.css';
 
 import CharacterBox from './Components/CharacterBox/CharacterBox'
 import MonsterBox from './Components/MonsterBox/MonsterBox'
+import Shop from './Components/Shop/Shop'
 
 import { getMonster,
           attack,
         } from './ducks/reducer'
 
-
 class App extends Component {
   constructor(props) {
     super()
     this.state = {
-      
+      shop: false
     }
 
     this.attackButton = this.attackButton.bind(this)
+    this.openShop = this.openShop.bind(this)
 
   }
 
@@ -33,33 +34,20 @@ class App extends Component {
 
   attackButton(HP, userStr, monDef, monStatus, monExp, currExp){
     console.log('teststats', HP, userStr, monDef, monStatus, monExp, currExp)
-    this.props.attack(HP, userStr, monDef, monStatus, monExp, currExp)
+    this.props.attack(HP, userStr, monDef, monStatus, monExp, currExp)  
+  }
 
-    
-    // let currMonsterHP = this.props.monsterHP
-
-    // let damage = this.props.strengthStat - this.props.currentMonster.defense
-    // if(this.props.monsterStatus != 'dead'){
-    //   if(damage > 0){
-    //     currMonsterHP = currMonsterHP - damage
-    //     if(currMonsterHP <= 0){
-  
-    //       this.setState({currentMonsterHp: currMonsterHP, monsterStatus: 'dead'})
-    //       setTimeout(this.getMonster, 2000)
-    //     }
-    //     this.setState({currentMonsterHP: currMonsterHP})
-    //   }
-      
-    //   console.log('currMonsterHP', currMonsterHP, damage)
-    // }
-
-    
+  openShop() {
+    if(this.state.shop === true){
+      this.setState({shop: false})
+    } else this.setState({shop: true})
   }
 
   render() {
 
 
     return (
+    <div className='page'>
       <div className="App">
         <CharacterBox />
         
@@ -84,6 +72,13 @@ class App extends Component {
         </div>
         
       </div>
+      <div className='shop'>
+        <button onClick={this.openShop}>Shop</button>
+        {this.state.shop === true &&
+          <Shop />
+        }
+      </div>
+    </div>
     );
   }
 }

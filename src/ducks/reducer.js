@@ -1,8 +1,10 @@
 import axios from "axios";
 
+
 //Action Constants
 
 const GET_MONSTER = "GET_MONSTER"
+const GET_SHOP = 'GET_SHOP'
 
 const LEVEL_UP = "LEVEL_UP"
 const STAT_MODIFIER = "STAT_MODIFIER"
@@ -46,7 +48,15 @@ export function getMonster() {
     }
     
   }
-
+export function getShop() {
+    return {
+        type: GET_SHOP,
+        payload: axios.get('/api/getShop').then(response => {
+            console.log(response.data)
+            return response.data
+        })
+    }
+}
 export function levelUp(exp, level, nextLevel, currPoints){
     
     let newLevel = level += 1
@@ -180,6 +190,16 @@ export default function reducer(state=initialState, action) {
                 currentMonster: action.payload,
                 monsterHP: action.payload.HP,
                 monsterStatus: 'alive'
+            });
+
+        case GET_SHOP + "_PENDING":
+            return Object.assign({}, state, {
+                isLoading: true
+            });
+        case GET_SHOP + "_FULFILLED":
+            return Object.assign({}, state, {
+                isLoading: false,
+                shopItems: action.payload
             });
 
         case LEVEL_UP: {

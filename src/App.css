@@ -1,18 +1,17 @@
-.App {
-  text-align: center;
-  display: flex;
+.page {
   background-image: url(https://www.elegantthemes.com/blog/wp-content/uploads/2017/10/seconddesignpng.png);
   width: 100vw;
   height: 100vh;
 }
 
+.App {
+  
+  display: flex;
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
-}
-
-.App-header {
-
 }
 
 .App-title {
