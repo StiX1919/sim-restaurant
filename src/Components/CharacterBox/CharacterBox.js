@@ -47,8 +47,8 @@ class CharacterBox extends Component {
                 <StatBox statType='Strength' statModifier={this.props.statModifier} currStat={this.props.strengthStat} mod={'pwr'} statsLeft={this.props.statPoints}/>
                 <StatBox statType='Speed' statModifier={this.props.statModifier} currStat={this.props.speedStat} mod={'spd'} statsLeft={this.props.statPoints}/>
                 <StatBox statType='Defense' statModifier={this.props.statModifier} currStat={this.props.defenseStat} mod={'def'} statsLeft={this.props.statPoints}/>
-                <div>
-                    <h3>Equipment:</h3>
+                <h3>Equipment:</h3>
+                <div className='equipment'>
                     <h4>Head</h4>
                     <h4>Chest</h4>
                     <h4>Arms</h4>
