@@ -12,7 +12,6 @@ class Shop extends Component {
     constructor(){
         super()
         this.state = {
-            code: 'done'
         }
 
 
