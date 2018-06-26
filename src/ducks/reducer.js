@@ -11,6 +11,7 @@ const STAT_MODIFIER = "STAT_MODIFIER"
 
 const ATTACKING = "ATTACKING"
 
+const PURCHASE_ITEM = "PURCHASE_ITEM"
 //Initial State
 
 const initialState = {
@@ -23,18 +24,35 @@ const initialState = {
     speedStat: 2,
     defenseStat: 2,
     statPoints: 3,
+    gold: 100,
 
 
     // monster info
     monsterStatus: 'alive',
     currentMonster: null,
-    monsterHP: null
+    monsterHP: null,
+
+    // inventory and store
+    inventory: [],
+
 
 
 }
 
 
 //Action Creators
+export function purchaseItem(item, oldInv, cost, oldGold) {
+    console.log(item, oldInv, cost)
+    let newInv = oldInv
+    let newGold = oldGold
+
+    newInv.push(item)
+    newGold -= cost
+    return {
+        type: PURCHASE_ITEM,
+        payload: {newInv, newGold}
+    }
+}
 
 export function getMonster() {
     return {
@@ -234,6 +252,12 @@ export default function reducer(state=initialState, action) {
                 monsterHP: action.payload.currMonsterHP,
                 monsterStatus: action.payload.newStatus,
                 exp: action.payload.exp
+            });
+        
+        case PURCHASE_ITEM:
+            return Object.assign({}, state, {
+                inventory: action.payload.newInv,
+                gold: action.payload.newGold
             })
 
         default:

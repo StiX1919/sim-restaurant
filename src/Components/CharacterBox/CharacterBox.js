@@ -13,29 +13,29 @@ class CharacterBox extends Component {
     constructor(){
         super()
         this.state = {
-            level: 1,
-            exp: 0,
-            nextLevel: 100,
-            strengthStat: 2,
-            speedStat: 2,
-            defenseStat: 2,
-            statPoints: 3,
+            
         }
 
 
     }
+    
 
       
 
     render() {
+        let inventory = <h3>Empty</h3>
+        if (this.props.inventory[0]){
+            inventory = this.props.inventory.map(item => {
+                console.log(item,this.props.inventory)
+                return <h3>{item}</h3>
+            })}
         return (
             <div className='mainBox'>
                 <h1>Create Your Character</h1>
                 <div>
                     <h3>Character Name</h3>
                     <input />
-                    <h3>Job</h3>
-                    <input />
+                    <h3>Gold: {this.props.gold}</h3>
                     <h4>Level: {this.props.level}</h4>
                     {this.props.exp >= this.props.nextLevel &&
                         <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.statPoints)}>Level Up</button>
@@ -54,6 +54,9 @@ class CharacterBox extends Component {
                     <h4>Arms</h4>
                     <h4>Legs</h4>
                     <h4>Weapon</h4>
+                </div>
+                <div>
+                    {inventory}
                 </div>
             </div>
         )

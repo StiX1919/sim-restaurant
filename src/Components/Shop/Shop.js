@@ -6,7 +6,7 @@ import './Shop.css';
 
 
 
-import {getShop} from '../../ducks/reducer'
+import {getShop, purchaseItem} from '../../ducks/reducer'
 
 class Shop extends Component {
     constructor(){
@@ -20,9 +20,24 @@ class Shop extends Component {
         this.props.getShop()
     }
 
+    
       
 
     render() {
+        let shopItems = <h3>Loading...</h3>
+
+        if (this.props.shopItems){
+            shopItems = this.props.shopItems.map((item, index)=> {
+                return <div className='descriptors2'>
+                <h4>{item.name}</h4>
+                <h4>{item.pwr}</h4>
+                <h4>{item.spd}</h4>
+                <h4>{item.def}</h4>
+                <h4>{item.price}</h4>
+                <button onClick={() => this.props.purchaseItem(item.name, this.props.inventory, item.price, this.props.gold)}>Buy</button>
+            </div>
+            })
+        }
         return (
             <div className='shopBox'>
                 <h2>Local Shop</h2> 
@@ -35,15 +50,8 @@ class Shop extends Component {
                     <h4>Price</h4>
                 </div>
                 <hr/>
-                {this.props.shopItems &&
-                    <div className='descriptors'>
-                        <h4>{this.props.shopItems[0].name}</h4>
-                        <h4>{this.props.shopItems[0].pwr}</h4>
-                        <h4>{this.props.shopItems[0].spd}</h4>
-                        <h4>{this.props.shopItems[0].def}</h4>
-                        <h4>{this.props.shopItems[0].price}</h4>
-                    </div>
-                }
+                
+                {shopItems}
                 
             </div>
         )
@@ -52,4 +60,4 @@ class Shop extends Component {
 }   
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {getShop})(Shop);
+export default connect(mapStateToProps, {getShop, purchaseItem})(Shop);
