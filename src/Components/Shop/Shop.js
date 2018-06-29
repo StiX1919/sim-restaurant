@@ -34,7 +34,7 @@ class Shop extends Component {
                 <h4>{item.spd}</h4>
                 <h4>{item.def}</h4>
                 <h4>{item.price}</h4>
-                <button onClick={() => this.props.purchaseItem(item.name, this.props.inventory, item.price, this.props.gold)}>Buy</button>
+                <button onClick={() => this.props.purchaseItem(item, this.props.inventory, item.price, this.props.gold)}>Buy</button>
             </div>
             })
         }

@@ -27,7 +27,10 @@ class CharacterBox extends Component {
         if (this.props.inventory[0]){
             inventory = this.props.inventory.map(item => {
                 console.log(item,this.props.inventory)
-                return <h3>{item}</h3>
+                return <div className="inventoryItems">
+                    <h3>{item.name}</h3>
+                    <button>Equip</button>
+                    </div>
             })}
         return (
             <div className='mainBox'>
