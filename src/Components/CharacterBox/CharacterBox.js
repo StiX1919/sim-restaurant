@@ -8,7 +8,8 @@ import StatBox from '../StatBox/StatBox'
 
 import {statModifier,
         levelUp,
-        equipItem} from '../../ducks/reducer'
+        equipItem,
+        attack} from '../../ducks/reducer'
 
 class CharacterBox extends Component {
     constructor(){
@@ -24,7 +25,13 @@ class CharacterBox extends Component {
         }
 
         this.equipItem = this.equipItem.bind(this)
+        this.attackButton = this.attackButton.bind(this)
     }
+
+    attackButton(HP, userStr, monDef, monStatus, monExp, currExp){
+        console.log('teststats', HP, userStr, monDef, monStatus, monExp, currExp)
+        this.props.attack(HP, userStr, monDef, monStatus, monExp, currExp)  
+      }
     
     equipItem(item) {
         if(item.type === 'weapon'){
@@ -151,6 +158,14 @@ class CharacterBox extends Component {
                     <h4>Available Stat Points: {this.props.statPoints}</h4>
                     
                 </div>
+                {this.props.monsterStatus !== 'dead' &&
+                    <button className="attackButtons" onClick={() => this.attackButton(this.props.monsterHP, 
+                                                                                trueStr, 
+                                                                                this.props.currentMonster.defense, 
+                                                                                this.props.monsterStatus, 
+                                                                                this.props.currentMonster.expValue,
+                                                                                this.props.exp)}>Attack</button>
+                }
                 <StatBox statType='Strength' statModifier={this.props.statModifier} currStat={trueStr} mod={'pwr'} statsLeft={this.props.statPoints}/>
                 <StatBox statType='Speed' statModifier={this.props.statModifier} currStat={trueSpd} mod={'spd'} statsLeft={this.props.statPoints}/>
                 <StatBox statType='Defense' statModifier={this.props.statModifier} currStat={trueDef} mod={'def'} statsLeft={this.props.statPoints}/>
@@ -172,4 +187,4 @@ class CharacterBox extends Component {
 }   
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {statModifier, levelUp, equipItem})(CharacterBox);
+export default connect(mapStateToProps, {statModifier, levelUp, equipItem, attack})(CharacterBox);
