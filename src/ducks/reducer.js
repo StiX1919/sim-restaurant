@@ -37,11 +37,14 @@ const initialState = {
 
     // inventory and store
     inventory: [],
-    Head: 'empty',
-    Chest: 'empty',
-    Arms: 'empty',
-    Legs: 'empty',
-    Weapon: 'empty'
+    equipment: {
+        head: 'empty',
+        chest: 'empty',
+        arms: 'empty',
+        legs: 'empty',
+        weapon: 'empty'
+    }
+    
 
 
 }
@@ -277,10 +280,32 @@ export default function reducer(state=initialState, action) {
             })
         
         case EQUIP:
-            if(action.payload.type === 'weapon')
-            return Object.assign({}, state, {
-                weapon: action.payload.name
-            })
+            if(action.payload.type === 'weapon'){
+                return Object.assign({}, state, {
+                    equipment:{weapon: action.payload.name}
+                })
+            }
+            else if(action.payload.type === 'head'){
+                return Object.assign({}, state, {
+                    head: action.payload.name
+                })
+            }
+            else if(action.payload.type === 'arms'){
+                return Object.assign({}, state, {
+                    arms: action.payload.name
+                })
+            }
+            else if(action.payload.type === 'legs'){
+                return Object.assign({}, state, {
+                    legs: action.payload.name
+                })
+            }
+            else if(action.payload.type === 'chest'){
+                return Object.assign({}, state, {
+                    equipment:{chest: action.payload.name}
+                })
+            }
+            
 
         default:
             return state
