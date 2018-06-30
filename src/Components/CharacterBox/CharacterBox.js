@@ -7,7 +7,8 @@ import './CharacterBox.css';
 import StatBox from '../StatBox/StatBox'
 
 import {statModifier,
-        levelUp} from '../../ducks/reducer'
+        levelUp,
+        equipItem} from '../../ducks/reducer'
 
 class CharacterBox extends Component {
     constructor(){
@@ -29,7 +30,7 @@ class CharacterBox extends Component {
                 console.log(item,this.props.inventory)
                 return <div className="inventoryItems">
                     <h3>{item.name}</h3>
-                    <button>Equip</button>
+                    <button onClick={() => this.props.equipItem(item)}>Equip</button>
                     </div>
             })}
         return (
@@ -56,7 +57,7 @@ class CharacterBox extends Component {
                     <h4>Chest</h4>
                     <h4>Arms</h4>
                     <h4>Legs</h4>
-                    <h4>Weapon</h4>
+                    <h4>Weapon: {this.props.weapon}</h4>
                 </div>
                 <div>
                     {inventory}
@@ -68,4 +69,4 @@ class CharacterBox extends Component {
 }   
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, {statModifier, levelUp})(CharacterBox);
+export default connect(mapStateToProps, {statModifier, levelUp, equipItem})(CharacterBox);

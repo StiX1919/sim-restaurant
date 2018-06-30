@@ -12,6 +12,9 @@ const STAT_MODIFIER = "STAT_MODIFIER"
 const ATTACKING = "ATTACKING"
 
 const PURCHASE_ITEM = "PURCHASE_ITEM"
+
+const EQUIP = 'EQUIP'
+
 //Initial State
 
 const initialState = {
@@ -34,13 +37,26 @@ const initialState = {
 
     // inventory and store
     inventory: [],
-
+    Head: 'empty',
+    Chest: 'empty',
+    Arms: 'empty',
+    Legs: 'empty',
+    Weapon: 'empty'
 
 
 }
 
 
 //Action Creators
+
+export function equipItem(item) {
+    console.log(item)
+    return {
+        type: EQUIP,
+        payload: item
+    }
+}
+
 export function purchaseItem(item, oldInv, cost, oldGold) {
     console.log(item, oldInv, cost)
     let newInv = oldInv
@@ -258,6 +274,12 @@ export default function reducer(state=initialState, action) {
             return Object.assign({}, state, {
                 inventory: action.payload.newInv,
                 gold: action.payload.newGold
+            })
+        
+        case EQUIP:
+            if(action.payload.type === 'weapon')
+            return Object.assign({}, state, {
+                weapon: action.payload.name
             })
 
         default:
