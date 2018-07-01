@@ -171,10 +171,10 @@ class CharacterBox extends Component {
                 <StatBox statType='Defense' statModifier={this.props.statModifier} currStat={trueDef} mod={'def'} statsLeft={this.props.statPoints}/>
                 <h3>Equipment:</h3>
                 <div className='equipment'>
-                    <h4>Head</h4>
-                    <h4>Chest</h4>
-                    <h4>Arms</h4>
-                    <h4>Legs</h4>
+                    <h4>Head: {this.state.equipment.head.name}</h4>
+                    <h4>Chest: {this.state.equipment.chest.name}</h4>
+                    <h4>Arms: {this.state.equipment.arms.name}</h4>
+                    <h4>Legs: {this.state.equipment.legs.name}</h4>
                     <h4>Weapon: {this.state.equipment.weapon.name}</h4>
                 </div>
                 <div>

@@ -16,7 +16,11 @@ let monsters = [{name: 'Slime', description: 'A small slime, early adventurers t
 
 let shop = [{name: 'Knife', pwr: 1, spd: 1, def: 0, price: 10, type: 'weapon'}, 
             {name: 'Sword', pwr: 1, spd: 0, def: 1, price: 12, type: 'weapon'},
-            {name: 'Axe', pwr: 2, spd: 0, def: 0, price: 14, type: 'weapon'}]
+            {name: 'Axe', pwr: 2, spd: 0, def: 0, price: 14, type: 'weapon'}, 
+            {name: 'Helmet', pwr: 1, spd: 0, def: 1, price: 12, type: 'head'}, 
+            {name: 'Leather Armor', pwr: 1, spd: 0, def: 1, price: 12, type: 'chest'}, 
+            {name: 'Bracelet', pwr: 1, spd: 0, def: 1, price: 12, type: 'arms'}, 
+            {name: 'High heels', pwr: 1, spd: 0, def: 1, price: 12, type: 'legs'}]
 
 //SAVED FOR BUILD
 //app.use(express.static(`${__dirname}/public/build`));
