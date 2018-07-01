@@ -52,14 +52,6 @@ class App extends Component {
         <CharacterBox />
         
         <div className="attacks">
-          {this.props.monsterStatus !== 'dead' &&
-            <button className="attackButtons" onClick={() => this.attackButton(this.props.monsterHP, 
-                                                                                this.props.strengthStat, 
-                                                                                this.props.currentMonster.defense, 
-                                                                                this.props.monsterStatus, 
-                                                                                this.props.currentMonster.expValue,
-                                                                                this.props.exp)}>Attack</button>
-          }
           {this.props.monsterStatus === 'dead' &&
             <button onClick={() => this.props.getMonster()} >New Monster</button>
           }

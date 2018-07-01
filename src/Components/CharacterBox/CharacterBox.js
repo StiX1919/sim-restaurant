@@ -177,7 +177,7 @@ class CharacterBox extends Component {
                     <h4>Legs: {this.state.equipment.legs.name}</h4>
                     <h4>Weapon: {this.state.equipment.weapon.name}</h4>
                 </div>
-                <div>
+                <div className='inventory'>
                     {inventory}
                 </div>
             </div>

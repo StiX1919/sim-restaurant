@@ -5,7 +5,6 @@
 }
 
 .App {
-  
   display: flex;
 }
 
@@ -20,11 +19,6 @@
 
 .App-intro {
   font-size: large;
-}
-.characterBox {
-  width: 400px;
-  height: 300px;
-  border: solid black 2px;
 }
 
 .attacks {
