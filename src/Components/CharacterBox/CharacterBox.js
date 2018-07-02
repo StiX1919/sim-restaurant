@@ -144,7 +144,7 @@ class CharacterBox extends Component {
             {console.log(this.state.equipment, 'stuff')}
         return (
             
-            <div className='mainBox'>
+            <div className='charBox'>
                 <h1>Create Your Character</h1>
                 <div>
                     <h3>Character Name</h3>
