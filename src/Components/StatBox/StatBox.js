@@ -20,7 +20,7 @@ class StatBox extends Component {
                 <h4>{this.props.statType}: </h4>
                 
                 
-                {this.props.currStat}
+                {this.props.fullStat}
                 {this.props.statsLeft > 0 &&
                     <button onClick={() => this.props.statModifier('+', this.props.mod, this.props.currStat, this.props.statsLeft)}>{'>'}</button>
                 }

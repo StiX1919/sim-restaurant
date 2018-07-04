@@ -166,9 +166,9 @@ class CharacterBox extends Component {
                                                                                 this.props.currentMonster.expValue,
                                                                                 this.props.exp)}>Attack</button>
                 }
-                <StatBox statType='Strength' statModifier={this.props.statModifier} currStat={trueStr} mod={'pwr'} statsLeft={this.props.statPoints}/>
-                <StatBox statType='Speed' statModifier={this.props.statModifier} currStat={trueSpd} mod={'spd'} statsLeft={this.props.statPoints}/>
-                <StatBox statType='Defense' statModifier={this.props.statModifier} currStat={trueDef} mod={'def'} statsLeft={this.props.statPoints}/>
+                <StatBox statType='Strength' statModifier={this.props.statModifier} fullStat={trueStr} currStat={this.props.strengthStat} mod={'pwr'} statsLeft={this.props.statPoints}/>
+                <StatBox statType='Speed' statModifier={this.props.statModifier} fullStat={trueSpd} currStat={this.props.speedStat} mod={'spd'} statsLeft={this.props.statPoints}/>
+                <StatBox statType='Defense' statModifier={this.props.statModifier} fullStat={trueDef} currStat={this.props.defenseStat} mod={'def'} statsLeft={this.props.statPoints}/>
                 <h3>Equipment:</h3>
                 <div className='equipment'>
                     <h4>Head: {this.state.equipment.head.name}</h4>

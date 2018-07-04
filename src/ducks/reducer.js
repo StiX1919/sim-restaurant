@@ -113,6 +113,7 @@ export function levelUp(exp, level, nextLevel, currPoints){
 }
 
 export function statModifier(direc, type, currStat, currPoints) {
+    console.log('stat mods', direc, type, currStat, currPoints)
     if(type === 'pwr'){
         let newStat = currStat
         let newPoints = currPoints
