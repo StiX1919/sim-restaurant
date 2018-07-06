@@ -44,7 +44,16 @@ class App extends Component {
   }
 
   render() {
-
+    let inventory = <h3>Empty</h3>
+    if (this.props.inventory[0]){
+        inventory = this.props.inventory.map(item => {
+            console.log(item,this.props.inventory)
+            return <div className="inventoryItems">
+                <h3>{item.name}</h3>
+                <button onClick={() => this.equipItem(item)}>Equip</button>
+                </div>
+        })}
+        {console.log(this.state.equipment, 'stuff')}
 
     return (
     <div className='page'>
@@ -65,6 +74,9 @@ class App extends Component {
         
       </div>
       <div className='shop'>
+        <div className='inventory'>
+          {inventory}
+        </div>
         <button onClick={this.openShop}>Shop</button>
         {this.state.shop === true &&
           <Shop />
