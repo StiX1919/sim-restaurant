@@ -131,6 +131,17 @@ class CharacterBox extends Component {
                 defBuff += this.state.equipment.chest.def
             }
         let trueDef = defBuff += this.props.defenseStat
+
+        let inventory = <h3>Empty</h3>
+        if (this.props.inventory[0]){
+            inventory = this.props.inventory.map(item => {
+                console.log(item,this.props.inventory)
+                return <div className="inventoryItems">
+                    <h3>{item.name}</h3>
+                    <button onClick={() => this.equipItem(item)}>Equip</button>
+                    </div>
+            })}
+            {console.log(this.state.equipment, 'stuff')}
         return (
             
             <div className='charBox'>
@@ -166,7 +177,9 @@ class CharacterBox extends Component {
                     <h4>Legs: {this.state.equipment.legs.name}</h4>
                     <h4>Weapon: {this.state.equipment.weapon.name}</h4>
                 </div>
-                
+                <div className='inventory'>
+                    {inventory}
+                </div>
             </div>
         )
     }

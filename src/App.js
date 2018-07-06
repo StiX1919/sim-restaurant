@@ -74,10 +74,8 @@ class App extends Component {
         
       </div>
       <div className='shop'>
-        <div className='inventory'>
-          {inventory}
-        </div>
         <button onClick={this.openShop}>Shop</button>
+        
         {this.state.shop === true &&
           <Shop />
         }
