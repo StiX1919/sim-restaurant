@@ -138,6 +138,7 @@ class CharacterBox extends Component {
                 console.log(item,this.props.inventory)
                 return <div className="inventoryItems">
                     <h3>{item.name}</h3>
+                    {this.state.equipment.map()}
                     <button onClick={() => this.equipItem(item)}>Equip</button>
                     </div>
             })}
