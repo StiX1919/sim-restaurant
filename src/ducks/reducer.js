@@ -94,6 +94,7 @@ export function getShop() {
         })
     }
 }
+
 export function levelUp(exp, level, nextLevel, currPoints){
     
     let newLevel = level += 1
