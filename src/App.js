@@ -27,6 +27,9 @@ class App extends Component {
   componentDidMount() {
     this.props.getMonster()
   }
+  userLogin() {
+    window.location.href= 'http://localhost:3000/api/login'
+  }
  
 
 
@@ -55,9 +58,11 @@ class App extends Component {
         })}
         {console.log(this.state.equipment, 'stuff')}
 
+
     return (
     <div className='page'>
       <div className="App">
+      <button onClick={() => this.userLogin()} >Login</button>
         <CharacterBox />
         
         <div className="attacks">
