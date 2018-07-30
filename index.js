@@ -93,7 +93,12 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj)
 })
 
-app.get('/api/login', passport.authenticate('auth0', {successRedirect: 'http://localhost:3001/'}))
+app.get('/api/login', passport.authenticate('auth0', {successRedirect: 'http://localhost:3001/characters'}))
+
+app.get('/api/preLogin', (req, res) => {
+  console.log('prelogin hit', req.user)
+  res.status(200).json(req.user)
+})
 
 
 app.get('/api/getMonster', (req, res) => {

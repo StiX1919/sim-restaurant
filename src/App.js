@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import axios from 'axios'
+import axios from 'axios'
 
 import {connect} from 'react-redux'
 import './App.css';
@@ -26,9 +26,9 @@ class App extends Component {
 
   componentDidMount() {
     this.props.getMonster()
-  }
-  userLogin() {
-    window.location.href= 'http://localhost:3000/api/login'
+    axios.get('/api/preLogin').then(response => {
+      console.log('response', response)
+    })
   }
  
 

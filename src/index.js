@@ -7,13 +7,15 @@ import { Provider } from 'react-redux'
 import  store from './store'
 
 import App from './App';
+import Router from './router'
+
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
     
     <Provider store = { store }>
         <BrowserRouter>
-            <App />
+            <Router />
         </BrowserRouter>
     </Provider>
     , document.getElementById('root'));
