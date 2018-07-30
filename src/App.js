@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import axios from 'axios'
+import axios from 'axios'
 
 import {connect} from 'react-redux'
 import './App.css';
@@ -26,6 +26,9 @@ class App extends Component {
 
   componentDidMount() {
     this.props.getMonster()
+    axios.get('/api/preLogin').then(response => {
+      console.log('response', response)
+    })
   }
  
 
@@ -55,9 +58,11 @@ class App extends Component {
         })}
         {console.log(this.state.equipment, 'stuff')}
 
+
     return (
     <div className='page'>
       <div className="App">
+      <button onClick={() => this.userLogin()} >Login</button>
         <CharacterBox />
         
         <div className="attacks">
