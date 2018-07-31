@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, withRouter } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
@@ -29,4 +29,4 @@ class Router extends Component{
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps)(Router)
+export default withRouter(connect(mapStateToProps)(Router))

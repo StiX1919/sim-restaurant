@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 
+import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import './App.css';
 
@@ -91,4 +92,4 @@ class Character extends Component {
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, { getMonster, attack })(Character);
+export default withRouter(connect(mapStateToProps, { getMonster, attack })(Character));
