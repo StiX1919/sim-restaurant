@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import './ChooseCharacter.css'
@@ -22,7 +23,7 @@ class ChooseCharacter extends Component {
         return(
             <div>
                 <h1>ChooseCharacter</h1>
-                <button>Create new character</button>
+                <Link to='/poop'><button>Create new character</button></Link>
             </div>
         )
     }

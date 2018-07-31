@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Landing from './Components/Landing/Landing'
-import App from './App'
+import Character from './Character'
 import ChooseCharacter from './Components/ChooseCharacter/ChooseCharacter'
 
 
@@ -18,6 +18,7 @@ class Router extends Component{
     return (
         <Switch>
             <Route exact path='/' component={Landing}/>
+            <Route path='/poop' component={Character}/>
             <Route path='/characters' component={ChooseCharacter}/>
             {/* <Route path="/chome" component={CustomerHome}/>
             <Route path='/rhome' component={RunnerHome}/> */}

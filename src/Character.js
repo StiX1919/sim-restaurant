@@ -12,7 +12,7 @@ import { getMonster,
           attack,
         } from './ducks/reducer'
 
-class App extends Component {
+class Character extends Component {
   constructor(props) {
     super()
     this.state = {
@@ -62,7 +62,6 @@ class App extends Component {
     return (
     <div className='page'>
       <div className="App">
-      <button onClick={() => this.userLogin()} >Login</button>
         <CharacterBox />
         
         <div className="attacks">
@@ -92,4 +91,4 @@ class App extends Component {
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps, { getMonster, attack })(App);
+export default connect(mapStateToProps, { getMonster, attack })(Character);
