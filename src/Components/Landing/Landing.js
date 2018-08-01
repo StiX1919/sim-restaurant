@@ -14,7 +14,7 @@ class Landing extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/preLogin').then(response => {
+    axios.get('/api/getUser').then(response => {
       console.log('response', response)
     })
   }

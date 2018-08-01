@@ -1,3 +1,7 @@
+.hero_Creation_Component {
+    display: flex
+}
+
 .hero_Creation_Box {
     display: flex;
     flex-direction: column;
@@ -30,6 +34,15 @@
 .classStats {
     display: flex;
     width: 100%
+}
+
+.raceButtonHolder {
+    display: flex
+}
+
+.raceCardHolder {
+    display: flex;
+    justify-content: space-around
 }
 
 h5 {

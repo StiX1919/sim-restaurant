@@ -1,0 +1,1 @@
+select * from heroes where user_id = $1

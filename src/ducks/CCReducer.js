@@ -5,6 +5,7 @@ import axios from "axios";
 
 const GET_CLASSES = "GET_CLASSES"
 const GET_RACES = "GET_RACES"
+const NEW_HERO = "NEW_HERO"
 
 
 //Initial State
@@ -13,7 +14,8 @@ const initialState = {
     testNum: 0,
     classes: [],
     races: [],
-    isLoading: false
+    isLoading: false,
+    heroData: null
     
 }
 
@@ -34,6 +36,12 @@ export function getRaces() {
     }
 }
 
+export function createNewHero(heroObj) {
+    return {
+        type: NEW_HERO,
+        payload: axios.post('/api/newHero', heroObj)
+    }
+}
 
 
 

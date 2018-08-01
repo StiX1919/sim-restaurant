@@ -27,7 +27,7 @@ let shop = [{name: 'Knife', pwr: 1, spd: 1, def: 0, price: 10, type: 'weapon'},
             {name: 'Bracelet', pwr: 1, spd: 0, def: 1, price: 12, type: 'arms'}, 
             {name: 'High heels', pwr: 1, spd: 0, def: 1, price: 12, type: 'legs'}]
 
-const {getClasses, getRaces} = require('./controllers/mainController.js')
+const {getClasses, getRaces, createNewHero, getHeroes} = require('./controllers/mainController.js')
 
 //SAVED FOR BUILD
 //app.use(express.static(`${__dirname}/public/build`));
@@ -81,7 +81,7 @@ passport.use(
     })
 
 
-    return done(null, profile);
+    // return done(null, profile);
   }
 ));
 
@@ -97,10 +97,7 @@ passport.deserializeUser(function(obj, done) {
 
 app.get('/api/login', passport.authenticate('auth0', {successRedirect: 'http://localhost:3001/characters'}))
 
-app.get('/api/preLogin', (req, res) => {
-  console.log('prelogin hit', req.user)
-  res.status(200).json(req.user)
-})
+
 
 
 app.get('/api/getMonster', (req, res) => {
@@ -111,8 +108,19 @@ app.get('/api/getShop', (req, res) => {
   res.send(shop)
 })
 
+app.get('/api/getUser', (req, res, next) => {
+  if(req.user) {
+    res.status(200).json(req.user.user_id)
+  }
+  next()
+})
+
+app.get('/api/getHeroes', getHeroes)
+
 app.get('/api/getClasses', getClasses)
 app.get('/api/getRaces', getRaces)
+
+app.post('/api/newHero', createNewHero)
 
 //LISTENING
 app.listen(port, () => {
