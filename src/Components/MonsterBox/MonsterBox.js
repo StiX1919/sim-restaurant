@@ -26,6 +26,6 @@ class MonsterBox extends Component {
     }
 
 }   
-const mapStateToProps = state => state
+const mapStateToProps = state => ({...state.reducer})
 
 export default connect(mapStateToProps, {})(MonsterBox);

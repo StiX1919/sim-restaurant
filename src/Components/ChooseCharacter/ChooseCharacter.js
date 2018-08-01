@@ -24,11 +24,11 @@ class ChooseCharacter extends Component {
         return(
             <div>
                 <Link to='/poop'><h1>ChooseCharacter</h1></Link>
-                <button>Create new character</button>
+                <Link to ='/newCharacter'><button>Create new character</button></Link>
             </div>
         )
     }
 }
-const mapStateToProps = state => state
+const mapStateToProps = state => ({...state.reducer})
 
 export default withRouter(connect(mapStateToProps)(ChooseCharacter));

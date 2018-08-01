@@ -27,6 +27,8 @@ let shop = [{name: 'Knife', pwr: 1, spd: 1, def: 0, price: 10, type: 'weapon'},
             {name: 'Bracelet', pwr: 1, spd: 0, def: 1, price: 12, type: 'arms'}, 
             {name: 'High heels', pwr: 1, spd: 0, def: 1, price: 12, type: 'legs'}]
 
+const {getClasses, getRaces} = require('./controllers/mainController.js')
+
 //SAVED FOR BUILD
 //app.use(express.static(`${__dirname}/public/build`));
 //
@@ -108,6 +110,9 @@ app.get('/api/getMonster', (req, res) => {
 app.get('/api/getShop', (req, res) => {
   res.send(shop)
 })
+
+app.get('/api/getClasses', getClasses)
+app.get('/api/getRaces', getRaces)
 
 //LISTENING
 app.listen(port, () => {

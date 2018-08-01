@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Landing from './Components/Landing/Landing'
 import Character from './Character'
 import ChooseCharacter from './Components/ChooseCharacter/ChooseCharacter'
+import CreateCharacter from './Components/CreateCharacter/CreateCharacter'
 
 
 
@@ -20,6 +21,7 @@ class Router extends Component{
             <Route exact path='/' component={Landing}/>
             <Route path='/poop' component={Character}/>
             <Route path='/characters' component={ChooseCharacter}/>
+            <Route path='/newCharacter' component={CreateCharacter}/>
             {/* <Route path="/chome" component={CustomerHome}/>
             <Route path='/rhome' component={RunnerHome}/> */}
         </Switch>

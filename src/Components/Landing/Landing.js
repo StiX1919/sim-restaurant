@@ -29,6 +29,7 @@ class Landing extends Component {
     return (
     <div className='page'>
       <div className="App">
+        <h1>MEGA RPG</h1>
         <button onClick={() => this.userLogin()} >Login</button>
       </div>
     </div>
