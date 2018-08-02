@@ -5,6 +5,8 @@ import axios from 'axios'
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 
+import CCC from '../ChooseCharacterCard/CCC'
+
 import {getUser, getHeroes} from '../../ducks/userReducer'
 
 import './ChooseCharacter.css'
@@ -25,9 +27,7 @@ class ChooseCharacter extends Component {
         let heroCards = (<h2>No heroes yet</h2>)
         if(this.props.heroes[0]) {
             heroCards = this.props.heroes.map((hero, ind) => {
-                return  <div>
-                            <h3>{hero.hero_name}</h3>
-                        </div>
+                return  <CCC hero={hero}/>
             })
         }
         return(
