@@ -145,10 +145,7 @@ class CharacterBox extends Component {
         return (
             
             <div className='charBox'>
-                <h1>Create Your Character</h1>
                 <div>
-                    <h3>Character Name</h3>
-                    <input />
                     <h3>Gold: {this.props.gold}</h3>
                     <h4>Level: {this.props.level}</h4>
                     {this.props.exp >= this.props.nextLevel &&
@@ -185,6 +182,6 @@ class CharacterBox extends Component {
     }
 
 }   
-const mapStateToProps = state => state
+const mapStateToProps = state => ({...state.reducer})
 
 export default connect(mapStateToProps, {statModifier, levelUp, equipItem, attack})(CharacterBox);

@@ -14,7 +14,7 @@ class Landing extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/preLogin').then(response => {
+    axios.get('/api/getUser').then(response => {
       console.log('response', response)
     })
   }
@@ -29,6 +29,7 @@ class Landing extends Component {
     return (
     <div className='page'>
       <div className="App">
+        <h1>MEGA RPG</h1>
         <button onClick={() => this.userLogin()} >Login</button>
       </div>
     </div>

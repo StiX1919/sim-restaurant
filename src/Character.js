@@ -90,6 +90,6 @@ class Character extends Component {
   }
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({...state.reducer})
 
 export default withRouter(connect(mapStateToProps, { getMonster, attack })(Character));
