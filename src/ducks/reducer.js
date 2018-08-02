@@ -7,7 +7,7 @@ const GET_MONSTER = "GET_MONSTER"
 const GET_SHOP = 'GET_SHOP'
 
 const LEVEL_UP = "LEVEL_UP"
-const STAT_MODIFIER = "STAT_MODIFIER"
+// const STAT_MODIFIER = "STAT_MODIFIER"
 
 const ATTACKING = "ATTACKING"
 
@@ -113,73 +113,73 @@ export function levelUp(exp, level, nextLevel, currPoints){
     }
 }
 
-export function statModifier(direc, type, currStat, currPoints) {
-    console.log('stat mods', direc, type, currStat, currPoints)
-    if(type === 'pwr'){
-        let newStat = currStat
-        let newPoints = currPoints
-        if(direc === '+'){
-            if(currPoints > 0){
-                newStat += 1
-                newPoints -= 1
-              }
-        }
-        else {
-            if(currStat > 2){
-                newStat -= 1
-                newPoints += 1
-              }
-        }
-        let payload = {newStat, newPoints, type}
-        console.log(payload)
-        return {
-            type: STAT_MODIFIER,
-            payload: payload
-        }
-    }
-    else if(type === 'spd') {
-        let newStat = currStat
-        let newPoints = currPoints
-        if(direc === '+'){
-            if(currPoints > 0){
-                newStat += 1
-                newPoints -= 1
-              }
-        }
-        else {
-            if(currStat > 2){
-                newStat -= 1
-                newPoints += 1
-              }
-        }
-        let payload = {newStat, newPoints, type}
-        return {
-            type: STAT_MODIFIER,
-            payload: payload
-        }
-    }
-    else if(type === 'def') {
-        let newStat = currStat
-        let newPoints = currPoints
-        if(direc === '+'){
-            if(currPoints > 0){
-                newStat += 1
-                newPoints -= 1
-              }
-        }
-        else {
-            if(currStat > 2){
-                newStat -= 1
-                newPoints += 1
-              }
-        }
-        let payload = {newStat, newPoints, type}
-        return {
-            type: STAT_MODIFIER,
-            payload: payload
-        }
-    }
-}
+// export function statModifier(direc, type, currStat, currPoints) {
+//     console.log('stat mods', direc, type, currStat, currPoints)
+//     if(type === 'pwr'){
+//         let newStat = currStat
+//         let newPoints = currPoints
+//         if(direc === '+'){
+//             if(currPoints > 0){
+//                 newStat += 1
+//                 newPoints -= 1
+//               }
+//         }
+//         else {
+//             if(currStat > 2){
+//                 newStat -= 1
+//                 newPoints += 1
+//               }
+//         }
+//         let payload = {newStat, newPoints, type}
+//         console.log(payload)
+//         return {
+//             type: STAT_MODIFIER,
+//             payload: payload
+//         }
+//     }
+//     else if(type === 'spd') {
+//         let newStat = currStat
+//         let newPoints = currPoints
+//         if(direc === '+'){
+//             if(currPoints > 0){
+//                 newStat += 1
+//                 newPoints -= 1
+//               }
+//         }
+//         else {
+//             if(currStat > 2){
+//                 newStat -= 1
+//                 newPoints += 1
+//               }
+//         }
+//         let payload = {newStat, newPoints, type}
+//         return {
+//             type: STAT_MODIFIER,
+//             payload: payload
+//         }
+//     }
+//     else if(type === 'def') {
+//         let newStat = currStat
+//         let newPoints = currPoints
+//         if(direc === '+'){
+//             if(currPoints > 0){
+//                 newStat += 1
+//                 newPoints -= 1
+//               }
+//         }
+//         else {
+//             if(currStat > 2){
+//                 newStat -= 1
+//                 newPoints += 1
+//               }
+//         }
+//         let payload = {newStat, newPoints, type}
+//         return {
+//             type: STAT_MODIFIER,
+//             payload: payload
+//         }
+//     }
+// }
 
 
 export function attack(HP, userStr, monDef, monStatus, monExp, currExp) {
@@ -249,25 +249,25 @@ export default function reducer(state=initialState, action) {
                 statPoints: action.payload.newPoint
             })
         }
-        case STAT_MODIFIER:
-            if(action.payload.type === 'pwr') {
-                return Object.assign({}, state, {
-                    strengthStat: action.payload.newStat,
-                    statPoints: action.payload.newPoints
-                });
-            }
-            else if(action.payload.type === 'spd') {
-                return Object.assign({}, state, {
-                    speedStat: action.payload.newStat,
-                    statPoints: action.payload.newPoints
-                });
-            }
-            else if(action.payload.type === 'def') {
-                return Object.assign({}, state, {
-                    defenseStat: action.payload.newStat,
-                    statPoints: action.payload.newPoints
-                });
-            } else break
+        // case STAT_MODIFIER:
+        //     if(action.payload.type === 'pwr') {
+        //         return Object.assign({}, state, {
+        //             strengthStat: action.payload.newStat,
+        //             statPoints: action.payload.newPoints
+        //         });
+        //     }
+        //     else if(action.payload.type === 'spd') {
+        //         return Object.assign({}, state, {
+        //             speedStat: action.payload.newStat,
+        //             statPoints: action.payload.newPoints
+        //         });
+        //     }
+        //     else if(action.payload.type === 'def') {
+        //         return Object.assign({}, state, {
+        //             defenseStat: action.payload.newStat,
+        //             statPoints: action.payload.newPoints
+        //         });
+        //     } else break
         case ATTACKING:
             return Object.assign({}, state, {
                 monsterHP: action.payload.currMonsterHP,

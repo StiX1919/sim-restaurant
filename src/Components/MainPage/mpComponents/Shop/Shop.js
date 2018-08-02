@@ -6,7 +6,7 @@ import './Shop.css';
 
 
 
-import {getShop, purchaseItem} from '../../ducks/reducer'
+import {getShop, purchaseItem} from '../../../../ducks/reducer'
 
 class Shop extends Component {
     constructor(){

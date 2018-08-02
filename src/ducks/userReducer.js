@@ -13,6 +13,7 @@ const GET_HEROES = 'GET_HEROES'
 
 const initialState = {
     testNum: 0,
+    isLoading: false,
     user: null,
     heroes: []
     

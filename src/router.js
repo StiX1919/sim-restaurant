@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
 import Landing from './Components/Landing/Landing'
-import Character from './Character'
+import MainPage from './Components/MainPage/MainPage'
 import ChooseCharacter from './Components/ChooseCharacter/ChooseCharacter'
 import CreateCharacter from './Components/CreateCharacter/CreateCharacter'
 
@@ -14,14 +14,20 @@ class Router extends Component{
     constructor(props){
         super(props)
     }
+    
  render(){
-     console.log('customer', this.props)
     return (
         <Switch>
             <Route exact path='/' component={Landing}/>
-            <Route path='/poop' component={Character}/>
             <Route path='/characters' component={ChooseCharacter}/>
-            <Route path='/newCharacter' component={CreateCharacter}/>
+            {this.props.user ?
+                <div>
+                    <Route path='/hero/:heroID' component={MainPage}/>
+                    <Route path='/newCharacter' component={CreateCharacter}/>
+                </div>
+                : <Redirect to="/"/>
+            }
+            
             {/* <Route path="/chome" component={CustomerHome}/>
             <Route path='/rhome' component={RunnerHome}/> */}
         </Switch>
@@ -29,6 +35,6 @@ class Router extends Component{
     }
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({...state.userReducer})
 
 export default withRouter(connect(mapStateToProps)(Router))

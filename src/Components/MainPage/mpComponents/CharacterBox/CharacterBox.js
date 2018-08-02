@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
 // import axios from 'axios'
 
+import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import './CharacterBox.css';
 
-import StatBox from '../StatBox/StatBox'
+import StatBox from './cbComponents/StatBox/StatBox'
 
-import {statModifier,
+import {
         levelUp,
         equipItem,
-        attack} from '../../ducks/reducer'
+        attack} from '../../../../ducks/reducer'
+
+import {
+        statModifier,
+        } from '../../../../ducks/heroReducer'
+
 
 class CharacterBox extends Component {
     constructor(){
         super()
         this.state = {
+            hero: null,
+            stats: 3,
             equipment: {
                 head: 'empty',
                 chest: 'empty',
@@ -26,6 +34,9 @@ class CharacterBox extends Component {
 
         this.equipItem = this.equipItem.bind(this)
         this.attackButton = this.attackButton.bind(this)
+    }
+    componentDidMount() {
+        this.setState({hero: this.props.currentHero})
     }
 
     attackButton(HP, userStr, monDef, monStatus, monExp, currExp){
@@ -78,6 +89,8 @@ class CharacterBox extends Component {
       
 
     render() {
+        let hero = this.state.hero
+
         let strBuff = 0
             if(this.state.equipment.weapon !== 'empty'){
                 strBuff += this.state.equipment.weapon.pwr
@@ -141,31 +154,39 @@ class CharacterBox extends Component {
                     <button onClick={() => this.equipItem(item)}>Equip</button>
                     </div>
             })}
-            {console.log(this.state.equipment, 'stuff')}
+            {console.log(this.props.currentHero, 'heroPorps')}
         return (
             
             <div className='charBox'>
                 <div>
-                    <h3>Gold: {this.props.gold}</h3>
-                    <h4>Level: {this.props.level}</h4>
-                    {this.props.exp >= this.props.nextLevel &&
+                    <h3>{hero ? hero.hero_name : 'nameless'}</h3>
+                    {/* <h4>Level: {this.props.level}</h4> */}
+                    {/* {this.props.exp >= this.props.nextLevel &&
                         <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.statPoints)}>Level Up</button>
                     }
                     <h4>EXP: {this.props.exp}/{this.props.nextLevel}</h4>
-                    <h4>Available Stat Points: {this.props.statPoints}</h4>
+                    <h4>Available Stat Points: {this.props.statPoints}</h4> */}
                     
                 </div>
-                {this.props.monsterStatus !== 'dead' &&
+                {/* {this.props.monsterStatus !== 'dead' &&
                     <button className="attackButtons" onClick={() => this.attackButton(this.props.monsterHP, 
                                                                                 trueStr, 
                                                                                 this.props.currentMonster.defense, 
                                                                                 this.props.monsterStatus, 
                                                                                 this.props.currentMonster.expValue,
                                                                                 this.props.exp)}>Attack</button>
-                }
-                <StatBox statType='Strength' statModifier={this.props.statModifier} fullStat={trueStr} currStat={this.props.strengthStat} mod={'pwr'} statsLeft={this.props.statPoints}/>
+                } */}
+                <h4>Str: {hero ? hero.hero_str : 0}</h4>
+                <h4>Def: {hero ? hero.hero_def : 0}</h4>
+                <h4>Spd: {hero ? hero.hero_spd : 0}</h4>
+                <h3>Extra Stats: {this.props.currentHero.extra_stats}</h3>
+                {/* <StatBox statType='Strength' statModifier={this.props.statModifier} fullStat={trueStr} currStat={this.props.strengthStat} mod={'pwr'} statsLeft={this.props.statPoints}/>
                 <StatBox statType='Speed' statModifier={this.props.statModifier} fullStat={trueSpd} currStat={this.props.speedStat} mod={'spd'} statsLeft={this.props.statPoints}/>
-                <StatBox statType='Defense' statModifier={this.props.statModifier} fullStat={trueDef} currStat={this.props.defenseStat} mod={'def'} statsLeft={this.props.statPoints}/>
+                <StatBox statType='Defense' statModifier={this.props.statModifier} fullStat={trueDef} currStat={this.props.defenseStat} mod={'def'} statsLeft={this.props.statPoints}/> */}
+
+                <StatBox statType='str' statModifier={this.props.statModifier} currStat={this.props.currentHero.hero_str} />
+                <StatBox statType='def' statModifier={this.props.statModifier} currStat={this.props.currentHero.hero_def} />
+                <StatBox statType='spd' statModifier={this.props.statModifier} currStat={this.props.currentHero.hero_spd} />
                 <h3>Equipment:</h3>
                 <div className='equipment'>
                     <h4>Head: {this.state.equipment.head.name}</h4>
@@ -182,6 +203,6 @@ class CharacterBox extends Component {
     }
 
 }   
-const mapStateToProps = state => ({...state.reducer})
+const mapStateToProps = state => ({...state.reducer, ...state.heroReducer})
 
-export default connect(mapStateToProps, {statModifier, levelUp, equipItem, attack})(CharacterBox);
+export default withRouter(connect(mapStateToProps, {statModifier, levelUp, equipItem, attack})(CharacterBox));

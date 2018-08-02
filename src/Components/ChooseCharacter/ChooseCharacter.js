@@ -5,9 +5,10 @@ import axios from 'axios'
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import CCC from '../ChooseCharacterCard/CCC'
+import CCC from './ccComponents/ChooseCharacterCard/CCC'
 
 import {getUser, getHeroes} from '../../ducks/userReducer'
+import {selectHero} from '../../ducks/heroReducer'
 
 import './ChooseCharacter.css'
 
@@ -27,7 +28,7 @@ class ChooseCharacter extends Component {
         let heroCards = (<h2>No heroes yet</h2>)
         if(this.props.heroes[0]) {
             heroCards = this.props.heroes.map((hero, ind) => {
-                return  <CCC hero={hero}/>
+                return  <Link to={`/hero/${hero.hero_id}`} onClick={() => this.props.selectHero(hero)}><CCC hero={hero} /></Link>
             })
         }
         return(
@@ -42,6 +43,6 @@ class ChooseCharacter extends Component {
         )
     }
 }
-const mapStateToProps = state => ({...state.reducer, ...state.userReducer})
+const mapStateToProps = state => ({...state.reducer, ...state.userReducer, ...state.heroReducer})
 
-export default withRouter(connect(mapStateToProps, {getUser, getHeroes})(ChooseCharacter));
+export default withRouter(connect(mapStateToProps, {getUser, getHeroes, selectHero})(ChooseCharacter));
