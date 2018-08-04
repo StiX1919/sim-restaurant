@@ -21,7 +21,7 @@ class StatBox extends Component {
                 
                 
                 {this.props.currStat}
-                {this.props.currentHero.extra_stats > 0 &&
+                {this.props.statsLeft > 0 &&
                     <button onClick={() => this.props.statModifier(this.props.currentHero, '+', this.props.statType)}>{'>'}</button>
                 }
                 

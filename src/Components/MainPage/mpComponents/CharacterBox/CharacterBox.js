@@ -22,7 +22,6 @@ class CharacterBox extends Component {
         super()
         this.state = {
             hero: null,
-            stats: 3,
             equipment: {
                 head: 'empty',
                 chest: 'empty',
@@ -32,11 +31,22 @@ class CharacterBox extends Component {
             }
         }
 
+        this.setHero = this.setHero.bind(this)
         this.equipItem = this.equipItem.bind(this)
         this.attackButton = this.attackButton.bind(this)
     }
     componentDidMount() {
-        this.setState({hero: this.props.currentHero})
+        this.setHero()
+    }
+
+    async setHero(hero, direction, statType) {
+        try {
+            await this.props.statModifier(hero, direction, statType)
+            await this.setState({hero: this.props.currentHero})
+        } catch(err) {
+            console.log(err)
+        }
+        
     }
 
     attackButton(HP, userStr, monDef, monStatus, monExp, currExp){
@@ -176,17 +186,11 @@ class CharacterBox extends Component {
                                                                                 this.props.currentMonster.expValue,
                                                                                 this.props.exp)}>Attack</button>
                 } */}
-                <h4>Str: {hero ? hero.hero_str : 0}</h4>
-                <h4>Def: {hero ? hero.hero_def : 0}</h4>
-                <h4>Spd: {hero ? hero.hero_spd : 0}</h4>
-                <h3>Extra Stats: {this.props.currentHero.extra_stats}</h3>
-                {/* <StatBox statType='Strength' statModifier={this.props.statModifier} fullStat={trueStr} currStat={this.props.strengthStat} mod={'pwr'} statsLeft={this.props.statPoints}/>
-                <StatBox statType='Speed' statModifier={this.props.statModifier} fullStat={trueSpd} currStat={this.props.speedStat} mod={'spd'} statsLeft={this.props.statPoints}/>
-                <StatBox statType='Defense' statModifier={this.props.statModifier} fullStat={trueDef} currStat={this.props.defenseStat} mod={'def'} statsLeft={this.props.statPoints}/> */}
+                <h3>Extra Stats: {hero ? hero.extra_stats : 0}</h3>
 
-                <StatBox statType='str' statModifier={this.props.statModifier} currStat={this.props.currentHero.hero_str} />
-                <StatBox statType='def' statModifier={this.props.statModifier} currStat={this.props.currentHero.hero_def} />
-                <StatBox statType='spd' statModifier={this.props.statModifier} currStat={this.props.currentHero.hero_spd} />
+                <StatBox statType='str' statModifier={this.setHero} currStat={this.props.currentHero.hero_str} statsLeft={hero ? hero.extra_stats : 0}/>
+                <StatBox statType='def' statModifier={this.setHero} currStat={this.props.currentHero.hero_def} statsLeft={hero ? hero.extra_stats : 0}/>
+                <StatBox statType='spd' statModifier={this.setHero} currStat={this.props.currentHero.hero_spd} statsLeft={hero ? hero.extra_stats : 0}/>
                 <h3>Equipment:</h3>
                 <div className='equipment'>
                     <h4>Head: {this.state.equipment.head.name}</h4>
