@@ -13,8 +13,14 @@ const STAT_MODIFIER = "STAT_MODIFIER"
 
 const initialState = {
     testNum: 0,
-    currentHero: null
-    
+    currentHero: null,
+    currentEquipment: {
+        head: 'empty',
+        chest: 'empty',
+        arms: 'empty',
+        legs: 'empty',
+        weapon: 'empty'
+    }
 }
 
 
