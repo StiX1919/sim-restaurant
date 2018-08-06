@@ -7,6 +7,8 @@ const SELECT_HERO = "SELECT_HERO"
 
 const STAT_MODIFIER = "STAT_MODIFIER"
 
+const GET_SHOP = 'GET_SHOP'
+
 
 
 //Initial State
@@ -20,7 +22,8 @@ const initialState = {
         arms: 'empty',
         legs: 'empty',
         weapon: 'empty'
-    }
+    },
+    currentInventory: []
 }
 
 
@@ -31,6 +34,17 @@ export function selectHero(hero) {
     return {
         type: SELECT_HERO,
         payload: hero
+    }
+    
+}
+
+export function getShop() {
+    return {
+        type: GET_SHOP,
+        payload: axios.get('/api/getShop').then(response => {
+            console.log(response.data)
+            return response.data
+        })
     }
 }
 
@@ -81,6 +95,16 @@ export default function heroReducer(state=initialState, action) {
                 isLoading: false,
                 currentHero: action.payload
             }
+
+        case GET_SHOP + "_PENDING":
+            return Object.assign({}, state, {
+                isLoading: true
+            });
+        case GET_SHOP + "_FULFILLED":
+            return Object.assign({}, state, {
+                isLoading: false,
+                shopItems: action.payload
+            });
 
         default:
             return state

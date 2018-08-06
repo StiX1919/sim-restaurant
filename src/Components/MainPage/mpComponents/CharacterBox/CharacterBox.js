@@ -156,9 +156,8 @@ class CharacterBox extends Component {
         // let trueDef = defBuff += this.props.defenseStat
 
         let inventory = <h3>Empty</h3>
-        if (this.props.inventory[0]){
-            inventory = this.props.inventory.map(item => {
-                console.log(item,this.props.inventory)
+        if (this.props.currentInventory[0]){
+            inventory = this.props.currentInventory.map(item => {
                 return <div className="inventoryItems">
                     <h3>{item.name}</h3>
                     <button onClick={() => this.equipItem(item)}>Equip</button>

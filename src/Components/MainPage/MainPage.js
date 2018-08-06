@@ -42,8 +42,8 @@ class MainPage extends Component {
 
   render() {
     let inventory = <h3>Empty</h3>
-    if (this.props.inventory[0]){
-        inventory = this.props.inventory.map(item => {
+    if (this.props.currentInventory[0]){
+        inventory = this.props.currentInventory.map(item => {
             console.log(item,this.props.inventory)
             return <div className="inventoryItems">
                 <h3>{item.name}</h3>

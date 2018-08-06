@@ -6,7 +6,9 @@ import './Shop.css';
 
 
 
-import {getShop, purchaseItem} from '../../../../ducks/reducer'
+import {purchaseItem} from '../../../../ducks/reducer'
+
+import {getShop} from '../../../../ducks/heroReducer'
 
 class Shop extends Component {
     constructor(){
@@ -58,6 +60,6 @@ class Shop extends Component {
     }
 
 }   
-const mapStateToProps = state => ({...state.reducer})
+const mapStateToProps = state => ({...state.reducer, ...state.heroReducer})
 
 export default connect(mapStateToProps, {getShop, purchaseItem})(Shop);
