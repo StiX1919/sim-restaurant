@@ -7,6 +7,7 @@ import './CharacterBox.css';
 
 import StatBox from './cbComponents/StatBox/StatBox'
 import Equipment from './cbComponents/equipment/equipment'
+import Inventory from './cbComponents/Inventory/Inventory'
 
 import {
         levelUp,
@@ -96,11 +97,17 @@ class CharacterBox extends Component {
     render() {
         let hero = this.state.hero
 
-        let equipmentArr = null
-        if(this.state.equipment){
-            equipmentArr = Object.keys(this.state.equipment)
+        // let equipmentArr = null
+        // if(this.state.equipment){
+        //     equipmentArr = Object.keys(this.state.equipment)
+        // }
+        let liveEquipment = 'Loading...'
+        
+        if(this.state.equipment) {
+            liveEquipment = Object.keys(this.state.equipment).map(item => {
+                return <Equipment type={item} equipObj={this.state.equipment[item]}/>
+            })
         }
-        console.log(equipmentArr, 'equipment')
         // let strBuff = 0
         //     if(this.state.equipment.weapon !== 'empty'){
         //         strBuff += this.state.equipment.weapon.pwr
@@ -158,12 +165,8 @@ class CharacterBox extends Component {
         let inventory = <h3>Empty</h3>
         if (this.props.currentInventory[0]){
             inventory = this.props.currentInventory.map(item => {
-                return <div className="inventoryItems">
-                    <h3>{item.name}</h3>
-                    <button onClick={() => this.equipItem(item)}>Equip</button>
-                    </div>
+                return <Inventory item={item} equipment={this.state.equipment} remount={this.setHero}/>
             })}
-            {console.log(this.props.currentHero, 'heroPorps')}
         return (
             
             <div className='charBox'>
@@ -191,12 +194,8 @@ class CharacterBox extends Component {
                 <StatBox statType='def' statModifier={this.setHero} currStat={this.props.currentHero.hero_def} statsLeft={hero ? hero.extra_stats : 0}/>
                 <StatBox statType='spd' statModifier={this.setHero} currStat={this.props.currentHero.hero_spd} statsLeft={hero ? hero.extra_stats : 0}/>
                 <h3>Equipment:</h3>
-
-                {equipmentArr && 
-                    equipmentArr.map(item => {
-                        return <Equipment type={item} equipObj={this.state.equipment}/>
-                    })
-                }
+                {liveEquipment}
+                
                 
                 <div className='inventory'>
                     {inventory}

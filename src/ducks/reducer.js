@@ -11,7 +11,6 @@ const LEVEL_UP = "LEVEL_UP"
 
 const ATTACKING = "ATTACKING"
 
-const PURCHASE_ITEM = "PURCHASE_ITEM"
 
 const EQUIP = 'EQUIP'
 
@@ -48,18 +47,6 @@ export function equipItem(item) {
     }
 }
 
-export function purchaseItem(item, oldInv, cost, oldGold) {
-    console.log(item, oldInv, cost)
-    let newInv = oldInv
-    let newGold = oldGold
-
-    newInv.push(item)
-    newGold -= cost
-    return {
-        type: PURCHASE_ITEM,
-        payload: {newInv, newGold}
-    }
-}
 
 export function getMonster() {
     return {
@@ -93,73 +80,6 @@ export function levelUp(exp, level, nextLevel, currPoints){
     }
 }
 
-// export function statModifier(direc, type, currStat, currPoints) {
-//     console.log('stat mods', direc, type, currStat, currPoints)
-//     if(type === 'pwr'){
-//         let newStat = currStat
-//         let newPoints = currPoints
-//         if(direc === '+'){
-//             if(currPoints > 0){
-//                 newStat += 1
-//                 newPoints -= 1
-//               }
-//         }
-//         else {
-//             if(currStat > 2){
-//                 newStat -= 1
-//                 newPoints += 1
-//               }
-//         }
-//         let payload = {newStat, newPoints, type}
-//         console.log(payload)
-//         return {
-//             type: STAT_MODIFIER,
-//             payload: payload
-//         }
-//     }
-//     else if(type === 'spd') {
-//         let newStat = currStat
-//         let newPoints = currPoints
-//         if(direc === '+'){
-//             if(currPoints > 0){
-//                 newStat += 1
-//                 newPoints -= 1
-//               }
-//         }
-//         else {
-//             if(currStat > 2){
-//                 newStat -= 1
-//                 newPoints += 1
-//               }
-//         }
-//         let payload = {newStat, newPoints, type}
-//         return {
-//             type: STAT_MODIFIER,
-//             payload: payload
-//         }
-//     }
-//     else if(type === 'def') {
-//         let newStat = currStat
-//         let newPoints = currPoints
-//         if(direc === '+'){
-//             if(currPoints > 0){
-//                 newStat += 1
-//                 newPoints -= 1
-//               }
-//         }
-//         else {
-//             if(currStat > 2){
-//                 newStat -= 1
-//                 newPoints += 1
-//               }
-//         }
-//         let payload = {newStat, newPoints, type}
-//         return {
-//             type: STAT_MODIFIER,
-//             payload: payload
-//         }
-//     }
-// }
 
 
 export function attack(HP, userStr, monDef, monStatus, monExp, currExp) {
@@ -244,12 +164,6 @@ export default function reducer(state=initialState, action) {
                 monsterStatus: action.payload.newStatus,
                 exp: action.payload.exp
             });
-        
-        case PURCHASE_ITEM:
-            return Object.assign({}, state, {
-                inventory: action.payload.newInv,
-                gold: action.payload.newGold
-            })
         
         case EQUIP:
             if(action.payload.type === 'weapon'){

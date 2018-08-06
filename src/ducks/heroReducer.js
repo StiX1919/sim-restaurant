@@ -8,8 +8,9 @@ const SELECT_HERO = "SELECT_HERO"
 const STAT_MODIFIER = "STAT_MODIFIER"
 
 const GET_SHOP = 'GET_SHOP'
+const PURCHASE_ITEM = "PURCHASE_ITEM"
 
-
+const EQUIP_GEAR = 'EQUIP_GEAR'
 
 //Initial State
 
@@ -21,13 +22,24 @@ const initialState = {
         chest: 'empty',
         arms: 'empty',
         legs: 'empty',
-        weapon: 'empty'
+        weapon: {name: 'Axe', pwr: 2, spd: 0, def: 0, price: 14, type: 'weapon'}
     },
-    currentInventory: []
+    currentInventory: [],
+    gold: 100
 }
 
 
 //Action Creators
+
+export function equipGear(item, CE) {
+    let newObj = CE
+    newObj[item.type] = item
+    console.log(newObj, 'testData')
+    return {
+        type: EQUIP_GEAR,
+        payload: newObj
+    }
+}
 
 export function selectHero(hero) {
     console.log('gotHero', hero)
@@ -48,8 +60,20 @@ export function getShop() {
     }
 }
 
+export function purchaseItem(item, oldInv, cost, oldGold) {
+    console.log(item, oldInv, cost)
+    let newInv = oldInv
+    let newGold = oldGold
+
+    newInv.push(item)
+    newGold -= cost
+    return {
+        type: PURCHASE_ITEM,
+        payload: {newInv, newGold}
+    }
+}
+
 export function statModifier(hero, direction, statType) {
-    console.log('statmodstuff', hero, direction, statType)
     let modHero = hero
     if(direction === '+') {
         if(statType === 'str') {
@@ -105,6 +129,18 @@ export default function heroReducer(state=initialState, action) {
                 isLoading: false,
                 shopItems: action.payload
             });
+
+        case PURCHASE_ITEM:
+            return Object.assign({}, state, {
+                currentInventory: action.payload.newInv,
+                gold: action.payload.newGold
+            })
+
+        case EQUIP_GEAR:
+            return {
+                ...state,
+                currentEquipment: action.payload
+            }
 
         default:
             return state
