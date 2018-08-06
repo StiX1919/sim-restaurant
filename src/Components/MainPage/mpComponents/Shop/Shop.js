@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import './Shop.css';
 
+import ShopItems from './shopComponents/shopItems/ShopItems'
 
-
-import {getShop, purchaseItem} from '../../ducks/reducer'
+import {getShop, purchaseItem} from '../../../../ducks/heroReducer'
 
 class Shop extends Component {
     constructor(){
@@ -28,14 +28,7 @@ class Shop extends Component {
 
         if (this.props.shopItems){
             shopItems = this.props.shopItems.map((item, index)=> {
-                return <div className='descriptors2'>
-                <h4>{item.name}</h4>
-                <h4>{item.pwr}</h4>
-                <h4>{item.spd}</h4>
-                <h4>{item.def}</h4>
-                <h4>{item.price}</h4>
-                <button onClick={() => this.props.purchaseItem(item, this.props.inventory, item.price, this.props.gold)}>Buy</button>
-            </div>
+                return <ShopItems item={item} gold={this.props.gold}/>
             })
         }
         return (
@@ -58,6 +51,6 @@ class Shop extends Component {
     }
 
 }   
-const mapStateToProps = state => ({...state.reducer})
+const mapStateToProps = state => ({...state.reducer, ...state.heroReducer})
 
 export default connect(mapStateToProps, {getShop, purchaseItem})(Shop);

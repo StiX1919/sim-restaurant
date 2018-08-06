@@ -4,14 +4,13 @@ import axios from "axios";
 //Action Constants
 
 const GET_MONSTER = "GET_MONSTER"
-const GET_SHOP = 'GET_SHOP'
+
 
 const LEVEL_UP = "LEVEL_UP"
-const STAT_MODIFIER = "STAT_MODIFIER"
+// const STAT_MODIFIER = "STAT_MODIFIER"
 
 const ATTACKING = "ATTACKING"
 
-const PURCHASE_ITEM = "PURCHASE_ITEM"
 
 const EQUIP = 'EQUIP'
 
@@ -34,19 +33,7 @@ const initialState = {
     monsterStatus: 'alive',
     currentMonster: null,
     monsterHP: null,
-
-    // inventory and store
-    inventory: [],
-    equipment: {
-        head: 'empty',
-        chest: 'empty',
-        arms: 'empty',
-        legs: 'empty',
-        weapon: 'empty'
-    }
     
-
-
 }
 
 
@@ -60,18 +47,6 @@ export function equipItem(item) {
     }
 }
 
-export function purchaseItem(item, oldInv, cost, oldGold) {
-    console.log(item, oldInv, cost)
-    let newInv = oldInv
-    let newGold = oldGold
-
-    newInv.push(item)
-    newGold -= cost
-    return {
-        type: PURCHASE_ITEM,
-        payload: {newInv, newGold}
-    }
-}
 
 export function getMonster() {
     return {
@@ -85,15 +60,7 @@ export function getMonster() {
     }
     
   }
-export function getShop() {
-    return {
-        type: GET_SHOP,
-        payload: axios.get('/api/getShop').then(response => {
-            console.log(response.data)
-            return response.data
-        })
-    }
-}
+
 
 export function levelUp(exp, level, nextLevel, currPoints){
     
@@ -113,73 +80,6 @@ export function levelUp(exp, level, nextLevel, currPoints){
     }
 }
 
-export function statModifier(direc, type, currStat, currPoints) {
-    console.log('stat mods', direc, type, currStat, currPoints)
-    if(type === 'pwr'){
-        let newStat = currStat
-        let newPoints = currPoints
-        if(direc === '+'){
-            if(currPoints > 0){
-                newStat += 1
-                newPoints -= 1
-              }
-        }
-        else {
-            if(currStat > 2){
-                newStat -= 1
-                newPoints += 1
-              }
-        }
-        let payload = {newStat, newPoints, type}
-        console.log(payload)
-        return {
-            type: STAT_MODIFIER,
-            payload: payload
-        }
-    }
-    else if(type === 'spd') {
-        let newStat = currStat
-        let newPoints = currPoints
-        if(direc === '+'){
-            if(currPoints > 0){
-                newStat += 1
-                newPoints -= 1
-              }
-        }
-        else {
-            if(currStat > 2){
-                newStat -= 1
-                newPoints += 1
-              }
-        }
-        let payload = {newStat, newPoints, type}
-        return {
-            type: STAT_MODIFIER,
-            payload: payload
-        }
-    }
-    else if(type === 'def') {
-        let newStat = currStat
-        let newPoints = currPoints
-        if(direc === '+'){
-            if(currPoints > 0){
-                newStat += 1
-                newPoints -= 1
-              }
-        }
-        else {
-            if(currStat > 2){
-                newStat -= 1
-                newPoints += 1
-              }
-        }
-        let payload = {newStat, newPoints, type}
-        return {
-            type: STAT_MODIFIER,
-            payload: payload
-        }
-    }
-}
 
 
 export function attack(HP, userStr, monDef, monStatus, monExp, currExp) {
@@ -231,16 +131,6 @@ export default function reducer(state=initialState, action) {
                 monsterStatus: 'alive'
             });
 
-        case GET_SHOP + "_PENDING":
-            return Object.assign({}, state, {
-                isLoading: true
-            });
-        case GET_SHOP + "_FULFILLED":
-            return Object.assign({}, state, {
-                isLoading: false,
-                shopItems: action.payload
-            });
-
         case LEVEL_UP: {
             return Object.assign({}, state, {
                 level: action.payload.newLevel,
@@ -249,37 +139,31 @@ export default function reducer(state=initialState, action) {
                 statPoints: action.payload.newPoint
             })
         }
-        case STAT_MODIFIER:
-            if(action.payload.type === 'pwr') {
-                return Object.assign({}, state, {
-                    strengthStat: action.payload.newStat,
-                    statPoints: action.payload.newPoints
-                });
-            }
-            else if(action.payload.type === 'spd') {
-                return Object.assign({}, state, {
-                    speedStat: action.payload.newStat,
-                    statPoints: action.payload.newPoints
-                });
-            }
-            else if(action.payload.type === 'def') {
-                return Object.assign({}, state, {
-                    defenseStat: action.payload.newStat,
-                    statPoints: action.payload.newPoints
-                });
-            } else break
+        // case STAT_MODIFIER:
+        //     if(action.payload.type === 'pwr') {
+        //         return Object.assign({}, state, {
+        //             strengthStat: action.payload.newStat,
+        //             statPoints: action.payload.newPoints
+        //         });
+        //     }
+        //     else if(action.payload.type === 'spd') {
+        //         return Object.assign({}, state, {
+        //             speedStat: action.payload.newStat,
+        //             statPoints: action.payload.newPoints
+        //         });
+        //     }
+        //     else if(action.payload.type === 'def') {
+        //         return Object.assign({}, state, {
+        //             defenseStat: action.payload.newStat,
+        //             statPoints: action.payload.newPoints
+        //         });
+        //     } else break
         case ATTACKING:
             return Object.assign({}, state, {
                 monsterHP: action.payload.currMonsterHP,
                 monsterStatus: action.payload.newStatus,
                 exp: action.payload.exp
             });
-        
-        case PURCHASE_ITEM:
-            return Object.assign({}, state, {
-                inventory: action.payload.newInv,
-                gold: action.payload.newGold
-            })
         
         case EQUIP:
             if(action.payload.type === 'weapon'){

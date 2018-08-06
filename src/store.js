@@ -4,8 +4,9 @@ import promiseMiddleware from 'redux-promise-middleware'
 import reducer from './ducks/reducer';
 import CCReducer from './ducks/CCReducer';
 import userReducer from './ducks/userReducer'
+import heroReducer from './ducks/heroReducer'
 
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 export default createStore(
-    combineReducers({reducer, CCReducer, userReducer}), composeWithDevTools(applyMiddleware(promiseMiddleware())))
+    combineReducers({reducer, CCReducer, userReducer, heroReducer}), composeWithDevTools(applyMiddleware(promiseMiddleware())))

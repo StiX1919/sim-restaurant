@@ -20,15 +20,15 @@ class StatBox extends Component {
                 <h4>{this.props.statType}: </h4>
                 
                 
-                {this.props.fullStat}
+                {this.props.currStat}
                 {this.props.statsLeft > 0 &&
-                    <button onClick={() => this.props.statModifier('+', this.props.mod, this.props.currStat, this.props.statsLeft)}>{'>'}</button>
+                    <button onClick={() => this.props.statModifier(this.props.currentHero, '+', this.props.statType)}>{'>'}</button>
                 }
                 
             </div>
         )
     }
 }   
-const mapStateToProps = state => state
+const mapStateToProps = state => ({...state.heroReducer})
 
 export default connect(mapStateToProps, {})(StatBox);

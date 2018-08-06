@@ -3,17 +3,17 @@ import axios from 'axios'
 
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import './App.css';
+import './MainPage.css';
 
-import CharacterBox from './Components/CharacterBox/CharacterBox'
-import MonsterBox from './Components/MonsterBox/MonsterBox'
-import Shop from './Components/Shop/Shop'
+import CharacterBox from './mpComponents/CharacterBox/CharacterBox'
+import MonsterBox from './mpComponents/MonsterBox/MonsterBox'
+import Shop from './mpComponents/Shop/Shop'
 
 import { getMonster,
           attack,
-        } from './ducks/reducer'
+        } from '../../ducks/reducer'
 
-class Character extends Component {
+class MainPage extends Component {
   constructor(props) {
     super()
     this.state = {
@@ -27,14 +27,7 @@ class Character extends Component {
 
   componentDidMount() {
     this.props.getMonster()
-    axios.get('/api/preLogin').then(response => {
-      console.log('response', response)
-    })
   }
- 
-
-
-  
 
   attackButton(HP, userStr, monDef, monStatus, monExp, currExp){
     console.log('teststats', HP, userStr, monDef, monStatus, monExp, currExp)
@@ -49,15 +42,15 @@ class Character extends Component {
 
   render() {
     let inventory = <h3>Empty</h3>
-    if (this.props.inventory[0]){
-        inventory = this.props.inventory.map(item => {
+    if (this.props.currentInventory[0]){
+        inventory = this.props.currentInventory.map(item => {
             console.log(item,this.props.inventory)
             return <div className="inventoryItems">
                 <h3>{item.name}</h3>
                 <button onClick={() => this.equipItem(item)}>Equip</button>
                 </div>
         })}
-        {console.log(this.state.equipment, 'stuff')}
+        {console.log(this.props.currentHero, 'top hero pors')}
 
 
     return (
@@ -90,6 +83,6 @@ class Character extends Component {
   }
 }
 
-const mapStateToProps = state => ({...state.reducer})
+const mapStateToProps = state => ({...state.reducer, ...state.heroReducer})
 
-export default withRouter(connect(mapStateToProps, { getMonster, attack })(Character));
+export default withRouter(connect(mapStateToProps, { getMonster, attack })(MainPage));
