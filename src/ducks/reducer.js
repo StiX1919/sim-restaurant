@@ -3,8 +3,6 @@ import axios from "axios";
 
 //Action Constants
 
-const GET_MONSTER = "GET_MONSTER"
-
 
 const LEVEL_UP = "LEVEL_UP"
 // const STAT_MODIFIER = "STAT_MODIFIER"
@@ -12,7 +10,6 @@ const LEVEL_UP = "LEVEL_UP"
 const ATTACKING = "ATTACKING"
 
 
-const EQUIP = 'EQUIP'
 
 //Initial State
 
@@ -38,28 +35,6 @@ const initialState = {
 
 
 //Action Creators
-
-export function equipItem(item) {
-    console.log(item)
-    return {
-        type: EQUIP,
-        payload: item
-    }
-}
-
-
-export function getMonster() {
-    return {
-        type: GET_MONSTER,
-        payload: axios.get('/api/getMonster').then(response => {
-            console.log(response.data)
-            return response.data
-            // this.setState({currentMonster: response.data, currentMonsterHP: response.data.HP, monsterStatus: 'alive', exp: currExp})
-            
-          })
-    }
-    
-  }
 
 
 export function levelUp(exp, level, nextLevel, currPoints){
@@ -119,18 +94,6 @@ export function attack(HP, userStr, monDef, monStatus, monExp, currExp) {
 export default function reducer(state=initialState, action) {
     switch(action.type) {
 
-        case GET_MONSTER + "_PENDING":
-            return Object.assign({}, state, {
-                isLoading: true
-            });
-        case GET_MONSTER + "_FULFILLED":
-            return Object.assign({}, state, {
-                isLoading: false,
-                currentMonster: action.payload,
-                monsterHP: action.payload.HP,
-                monsterStatus: 'alive'
-            });
-
         case LEVEL_UP: {
             return Object.assign({}, state, {
                 level: action.payload.newLevel,
@@ -139,58 +102,13 @@ export default function reducer(state=initialState, action) {
                 statPoints: action.payload.newPoint
             })
         }
-        // case STAT_MODIFIER:
-        //     if(action.payload.type === 'pwr') {
-        //         return Object.assign({}, state, {
-        //             strengthStat: action.payload.newStat,
-        //             statPoints: action.payload.newPoints
-        //         });
-        //     }
-        //     else if(action.payload.type === 'spd') {
-        //         return Object.assign({}, state, {
-        //             speedStat: action.payload.newStat,
-        //             statPoints: action.payload.newPoints
-        //         });
-        //     }
-        //     else if(action.payload.type === 'def') {
-        //         return Object.assign({}, state, {
-        //             defenseStat: action.payload.newStat,
-        //             statPoints: action.payload.newPoints
-        //         });
-        //     } else break
         case ATTACKING:
             return Object.assign({}, state, {
                 monsterHP: action.payload.currMonsterHP,
                 monsterStatus: action.payload.newStatus,
                 exp: action.payload.exp
             });
-        
-        case EQUIP:
-            if(action.payload.type === 'weapon'){
-                return Object.assign({}, state, {
-                    equipment:{weapon: action.payload.name}
-                })
-            }
-            else if(action.payload.type === 'head'){
-                return Object.assign({}, state, {
-                    head: action.payload.name
-                })
-            }
-            else if(action.payload.type === 'arms'){
-                return Object.assign({}, state, {
-                    arms: action.payload.name
-                })
-            }
-            else if(action.payload.type === 'legs'){
-                return Object.assign({}, state, {
-                    legs: action.payload.name
-                })
-            }
-            else if(action.payload.type === 'chest'){
-                return Object.assign({}, state, {
-                    equipment:{chest: action.payload.name}
-                })
-            }
+ 
             
 
         default:

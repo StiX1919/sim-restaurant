@@ -9,9 +9,9 @@ import CharacterBox from './mpComponents/CharacterBox/CharacterBox'
 import MonsterBox from './mpComponents/MonsterBox/MonsterBox'
 import Shop from './mpComponents/Shop/Shop'
 
-import { getMonster,
-          attack,
-        } from '../../ducks/reducer'
+import { attack } from '../../ducks/reducer'
+
+import {getMonster} from '../../ducks/monsterReducer'
 
 class MainPage extends Component {
   constructor(props) {
@@ -83,6 +83,6 @@ class MainPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({...state.reducer, ...state.heroReducer})
+const mapStateToProps = state => ({...state.reducer, ...state.heroReducer, ...state.monsterReducer})
 
 export default withRouter(connect(mapStateToProps, { getMonster, attack })(MainPage));

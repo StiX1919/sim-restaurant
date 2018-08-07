@@ -10,22 +10,41 @@ class MonsterBox extends Component {
         this.state = {
 
         }
+        this.setMon = this.setMon.bind(this)
 
-
+    }
+    componentDidMount() {
+        this.setMon()
+    }
+    async setMon() {
+        try {
+            await this.setState({monster: this.props.currentMonster})
+        } catch(err) {
+            console.log(err)
+        }
+        if(!this.state.monster){
+            this.setMon()
+        }
+        
     }
 
     render() {
+        console.log(this.state.monster, 'monbox')
         return (
-            <div className='mainBox'>
-                <h2>{this.props.currentMonster.name}</h2>
-                <img className='monsterImg' src={this.props.currentMonster.image} alt=''/>
-                <h4>{this.props.currentMonster.description}</h4>
-                <h4>Current HP: {this.props.monsterHP}</h4>
+            <div>
+                {this.state.currentMonster &&
+                <div className='mainBox'>
+                    <h2>{this.state.monster.name}</h2>
+                    <img className='monsterImg' src={this.state.monster.image} alt=''/>
+                    <h4>{this.state.monster.description}</h4>
+                    <h4>Current HP: {this.props.monsterHP}</h4>
+                </div>
+                }
             </div>
         )
     }
 
 }   
-const mapStateToProps = state => ({...state.reducer})
+const mapStateToProps = state => ({...state.monsterReducer})
 
 export default connect(mapStateToProps, {})(MonsterBox);

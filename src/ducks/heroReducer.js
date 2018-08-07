@@ -22,7 +22,7 @@ const initialState = {
         chest: 'empty',
         arms: 'empty',
         legs: 'empty',
-        weapon: {name: 'Axe', pwr: 2, spd: 0, def: 0, price: 14, type: 'weapon'}
+        weapon: 'empty'
     },
     currentInventory: [],
     gold: 100
