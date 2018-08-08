@@ -27,6 +27,10 @@ class MonsterBox extends Component {
         }
         
     }
+    shouldComponentUpdate(){
+        return this.state.monster === this.props.currentMonster
+    }
+    
 
     render() {
         console.log(this.state.monster, 'monbox')
