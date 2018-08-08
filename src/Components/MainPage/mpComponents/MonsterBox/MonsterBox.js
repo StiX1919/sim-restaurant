@@ -27,9 +27,9 @@ class MonsterBox extends Component {
         }
         
     }
-    shouldComponentUpdate(){
-        return this.state.monster === this.props.currentMonster
-    }
+    // shouldComponentUpdate(){
+    //     return this.state.monster === this.props.currentMonster
+    // }
     
 
     render() {
