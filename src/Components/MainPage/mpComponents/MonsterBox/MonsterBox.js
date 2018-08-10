@@ -17,14 +17,19 @@ class MonsterBox extends Component {
         this.setMon()
     }
     async setMon() {
-        try {
-            await this.setState({monster: this.props.currentMonster})
-        } catch(err) {
-            console.log(err)
-        }
         if(!this.state.monster){
-            this.setMon()
+            try {
+                await this.setState({monster: this.props.currentMonster})
+            } catch(err) {
+                console.log(err)
+            }
+            if(!this.state.monster){
+                this.setMon()
+            }
+        } else if (this.state.monster !== this.props.currentMonster){
+            this.setState({monster: this.props.currentMonster})
         }
+        
         
     }
     // shouldComponentUpdate(){
@@ -33,15 +38,16 @@ class MonsterBox extends Component {
     
 
     render() {
-        console.log(this.state.monster, 'monbox')
+        this.setMon()
+        console.log(this.state.monster, 'monbox', this.props.currentMonster)
         return (
             <div>
-                {this.state.currentMonster &&
+                {this.state.monster &&
                 <div className='mainBox'>
                     <h2>{this.state.monster.name}</h2>
                     <img className='monsterImg' src={this.state.monster.image} alt=''/>
                     <h4>{this.state.monster.description}</h4>
-                    <h4>Current HP: {this.props.monsterHP}</h4>
+                    <h4>Current HP: {this.state.monster.HP}</h4>
                 </div>
                 }
             </div>
