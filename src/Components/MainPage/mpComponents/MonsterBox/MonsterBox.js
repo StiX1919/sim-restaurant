@@ -26,7 +26,7 @@ class MonsterBox extends Component {
             if(!this.state.monster){
                 this.setMon()
             }
-        } else if (this.state.monster !== this.props.currentMonster){
+        } else if (this.state.monster.HP !== this.props.currentMonster.HP){
             this.setState({monster: this.props.currentMonster})
         }
         
@@ -38,7 +38,7 @@ class MonsterBox extends Component {
     
 
     render() {
-        this.setMon()
+        // this.setMon()
         console.log(this.state.monster, 'monbox', this.props.currentMonster)
         return (
             <div>

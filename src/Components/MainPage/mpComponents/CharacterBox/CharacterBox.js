@@ -69,7 +69,6 @@ class CharacterBox extends Component {
         let buffs = {str: 0, def: 0, spd: 0}
         if(this.state.equipment) {
             Object.keys(this.state.equipment).map((item, index) => {
-                console.log(this.state.equipment[item].pwr)
                 buffs.str += this.state.equipment[item].pwr ? this.state.equipment[item].pwr : 0
                 buffs.def += this.state.equipment[item].def ? this.state.equipment[item].def : 0
                 buffs.spd += this.state.equipment[item].spd ? this.state.equipment[item].spd : 0
