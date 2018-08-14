@@ -49,14 +49,9 @@ class MainPage extends Component {
       <div className="App">
         <CharacterBox getNewMon={this.props.getMonster}/>
         
-        <div className="attacks">
           {this.props.currentMonster && this.props.currentMonster.HP <= 0 &&
-            <div>
-              <h2>Monster is Dead!</h2>
-              <button onClick={() => this.props.getMonster()} >New Monster</button>
-            </div>
+            <h2>Monster is Dead!</h2>
           }
-        </div>
 
 
         <div>

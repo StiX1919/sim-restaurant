@@ -97,7 +97,15 @@ class CharacterBox extends Component {
                     <h4>Gold: {this.props.gold}</h4>
                     
                 </div>
-                <button onClick={() => this.attacking(this.props.currentMonster, this.state.hero, buffs)}>Attack!!</button>
+                {this.props.currentMonster && this.props.currentMonster.HP > 0 &&
+                    <button onClick={() => this.attacking(this.props.currentMonster, this.state.hero, buffs)}>Attack!!</button>
+                }
+                {this.props.currentMonster && this.props.currentMonster.HP <= 0 &&
+                    <div>
+                        <button onClick={() => this.props.getNewMon()} >New Monster</button>
+                    </div>
+                }
+                
                 <h3>Extra Stats: {hero ? hero.extra_stats : 0}</h3>
 
                 <StatBox statType='str' statModifier={this.setHero} buffs = {buffs} currStat={this.props.currentHero.hero_str} statsLeft={hero ? hero.extra_stats : 0}/>
