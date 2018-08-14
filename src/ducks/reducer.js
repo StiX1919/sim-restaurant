@@ -19,10 +19,6 @@ const initialState = {
     level: 1,
     exp: 0,
     nextLevel: 100,
-    strengthStat: 2,
-    speedStat: 2,
-    defenseStat: 2,
-    statPoints: 3,
     gold: 100,
 
 
