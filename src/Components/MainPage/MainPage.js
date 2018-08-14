@@ -77,6 +77,6 @@ class MainPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({...state.reducer, ...state.heroReducer, ...state.monsterReducer})
+const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer})
 
 export default withRouter(connect(mapStateToProps, { getMonster})(MainPage));

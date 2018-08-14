@@ -31,7 +31,7 @@ const initialState = {
     exp: 0,
     nextLevel: 100,
     level: 1,
-    gold: 100,
+    gold: 10,
     bonusStats: 0
 
 }
@@ -141,6 +141,9 @@ export default function heroReducer(state=initialState, action) {
             return {
                 ...state,
                 currentHero: action.payload,
+                exp: action.payload.hero_exp,
+                level: action.payload.hero_level,
+                gold: action.payload.gold,
                 bonusStats: action.payload.extra_stats
             }
         case STAT_MODIFIER + '_PENDING':

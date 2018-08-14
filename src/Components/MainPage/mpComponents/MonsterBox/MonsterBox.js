@@ -10,35 +10,10 @@ class MonsterBox extends Component {
         this.state = {
 
         }
-        // this.setMon = this.setMon.bind(this)
-
     }
-    // componentDidMount() {
-    //     this.setMon()
-    // }
-    // async setMon() {
-    //     if(!this.state.monster){
-    //         try {
-    //             await this.setState({monster: this.props.currentMonster, monsterHP: this.props.monsterHP})
-    //         } catch(err) {
-    //             console.log(err)
-    //         }
-    //         if(!this.state.monster){
-    //             this.setMon()
-    //         }
-    //     } else if (this.state.monster.HP !== this.props.currentMonster.HP){
-    //         this.setState({monster: this.props.currentMonster})
-    //     }
-        
-        
-    // }
-    // shouldComponentUpdate(){
-    //     return this.state.monster === this.props.currentMonster
-    // }
     
 
     render() {
-        // this.setMon()
         console.log(this.state.monster, 'monbox', this.props.currentMonster)
         return (
             <div>
