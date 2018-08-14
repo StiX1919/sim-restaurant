@@ -68,7 +68,7 @@ export default function monsterReducer(state=initialState, action) {
             });
 
         case ATTACKING:
-            return {...state, currentMonster: action.payload}
+            return {...state, currentMonster: action.payload, monsterHP: action.payload.HP}
 
         default:
             return state

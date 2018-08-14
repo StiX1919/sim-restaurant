@@ -56,7 +56,7 @@ class MainPage extends Component {
     return (
     <div className='page'>
       <div className="App">
-        <CharacterBox />
+        <CharacterBox getNewMon={this.props.getMonster}/>
         
         <div className="attacks">
           {this.props.monsterStatus === 'dead' &&

@@ -11,7 +11,7 @@ import Inventory from './cbComponents/Inventory/Inventory'
 
 import {levelUp} from '../../../../ducks/reducer'
 
-import {statModifier,} from '../../../../ducks/heroReducer'
+import {statModifier, beatMonster} from '../../../../ducks/heroReducer'
 
 import {attack} from '../../../../ducks/monsterReducer'
 
@@ -44,9 +44,15 @@ class CharacterBox extends Component {
     attacking(monster, hero, buffObj) {
         let power = hero.hero_str + buffObj.str - monster.defense
         let newHP = monster.HP -= power
-        let newMon = Object.assign({}, monster, {HP: newHP})
+        if(newHP <= 0) {
+            this.props.beatMonster(monster, this.props.exp, this.props.gold)
+            this.props.getNewMon()
+        } else {
+            let newMon = Object.assign({}, monster, {HP: newHP})
+            
+            this.props.attack(newMon)
+        }
         
-        this.props.attack(newMon)
     }
       
 
@@ -84,8 +90,9 @@ class CharacterBox extends Component {
                     {/* {this.props.exp >= this.props.nextLevel &&
                         <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.statPoints)}>Level Up</button>
                     }
-                    <h4>EXP: {this.props.exp}/{this.props.nextLevel}</h4>
-                    <h4>Available Stat Points: {this.props.statPoints}</h4> */}
+                    <h4>EXP: {this.props.exp}/{this.props.nextLevel}</h4>*/}
+                    <h3>EXP: {this.props.exp}</h3>
+                    <h4>Gold: {this.props.gold}</h4>
                     
                 </div>
                 <button onClick={() => this.attacking(this.props.currentMonster, this.state.hero, buffs)}>Attack!!</button>
@@ -108,4 +115,4 @@ class CharacterBox extends Component {
 }   
 const mapStateToProps = state => ({...state.reducer, ...state.heroReducer, ...state.monsterReducer})
 
-export default withRouter(connect(mapStateToProps, {statModifier, levelUp, attack})(CharacterBox));
+export default withRouter(connect(mapStateToProps, {statModifier, levelUp, attack, beatMonster})(CharacterBox));

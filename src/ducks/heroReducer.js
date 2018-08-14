@@ -12,6 +12,8 @@ const PURCHASE_ITEM = "PURCHASE_ITEM"
 
 const EQUIP_GEAR = 'EQUIP_GEAR'
 
+const BEAT_MONSTER = 'BEAT_MONSTER'
+
 //Initial State
 
 const initialState = {
@@ -25,11 +27,19 @@ const initialState = {
         weapon: 'empty'
     },
     currentInventory: [],
+    exp: 0,
     gold: 100
 }
 
 
 //Action Creators
+export function beatMonster(mon, currExp, currGold) {
+    let bonuses = {exp: currExp += mon.expValue, gold: currGold += mon.gold}
+    return {
+        type: BEAT_MONSTER,
+        payload: bonuses
+    }
+}
 
 export function equipGear(item, CE) {
     let newObj = CE
@@ -134,6 +144,12 @@ export default function heroReducer(state=initialState, action) {
             return Object.assign({}, state, {
                 currentInventory: action.payload.newInv,
                 gold: action.payload.newGold
+            })
+        
+        case BEAT_MONSTER:
+            return Object.assign({}, state, {
+                exp: action.payload.exp,
+                gold: action.payload.gold
             })
 
         case EQUIP_GEAR:
