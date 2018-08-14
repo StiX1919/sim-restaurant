@@ -9,14 +9,9 @@ import StatBox from './cbComponents/StatBox/StatBox'
 import Equipment from './cbComponents/equipment/equipment'
 import Inventory from './cbComponents/Inventory/Inventory'
 
-import {
-        levelUp,
-        equipItem,
-        attack} from '../../../../ducks/reducer'
+import {statModifier, beatMonster, levelUp} from '../../../../ducks/heroReducer'
 
-import {
-        statModifier,
-        } from '../../../../ducks/heroReducer'
+import {attack} from '../../../../ducks/monsterReducer'
 
 
 class CharacterBox extends Component {
@@ -24,12 +19,12 @@ class CharacterBox extends Component {
         super()
         this.state = {
             hero: null,
-            equipment: null
+            equipment: null,
+            invOpen: false
         }
 
         this.setHero = this.setHero.bind(this)
-        this.equipItem = this.equipItem.bind(this)
-        this.attackButton = this.attackButton.bind(this)
+        this.attacking = this.attacking.bind(this)
     }
     componentDidMount() {
         this.setHero()
@@ -44,167 +39,85 @@ class CharacterBox extends Component {
         }
         
     }
-
-    attackButton(HP, userStr, monDef, monStatus, monExp, currExp){
-        console.log('teststats', HP, userStr, monDef, monStatus, monExp, currExp)
-        this.props.attack(HP, userStr, monDef, monStatus, monExp, currExp)  
-      }
     
-    equipItem(item) {
-        if(item.type === 'weapon'){
-            this.setState({equipment: {
-                head: this.state.equipment.head,
-                chest: this.state.equipment.chest,
-                arms: this.state.equipment.arms,
-                legs: this.state.equipment.legs,
-                weapon: item}})
+    attacking(monster, hero, buffObj) {
+        let power = hero.hero_str + buffObj.str - monster.defense
+        let newHP = monster.HP -= power
+        if(newHP <= 0) {
+            this.props.beatMonster(monster, this.props.exp, this.props.gold)
+            // this.props.getNewMon()
+        } else {
+            let newMon = Object.assign({}, monster, {HP: newHP})
+            
+            this.props.attack(newMon)
         }
-        else if(item.type === 'legs'){
-            this.setState({equipment: {
-                head: this.state.equipment.head,
-                chest: this.state.equipment.chest,
-                arms: this.state.equipment.arms,
-                legs: item,
-                weapon: this.state.equipment.weapon}})
-        }
-        else if(item.type === 'arms'){
-            this.setState({equipment: {
-                head: this.state.equipment.head,
-                chest: this.state.equipment.chest,
-                arms: item,
-                legs: this.state.equipment.legs,
-                weapon: this.state.equipment.weapon}})
-        }
-        else if(item.type === 'chest'){
-            this.setState({equipment: {
-                head: this.state.equipment.head,
-                chest: item,
-                arms: this.state.equipment.arms,
-                legs: this.state.equipment.legs,
-                weapon: this.state.equipment.weapon}})
-        }
-        else if(item.type === 'head'){
-            this.setState({equipment: {
-                head: item,
-                chest: this.state.equipment.chest,
-                arms: this.state.equipment.arms,
-                legs: this.state.equipment.legs,
-                weapon: this.state.equipment.weapon}})
-        }
+        
+    }
+
+    openInventory() {
+        this.setState({invOpen: !this.state.invOpen})
     }
       
 
     render() {
-        let hero = this.state.hero
+        let hero = this.props.currentHero
 
-        // let equipmentArr = null
-        // if(this.state.equipment){
-        //     equipmentArr = Object.keys(this.state.equipment)
-        // }
         let liveEquipment = 'Loading...'
-        
         if(this.state.equipment) {
             liveEquipment = Object.keys(this.state.equipment).map(item => {
                 return <Equipment type={item} equipObj={this.state.equipment[item]}/>
             })
         }
-        // let strBuff = 0
-        //     if(this.state.equipment.weapon !== 'empty'){
-        //         strBuff += this.state.equipment.weapon.pwr
-        //     }
-        //     if(this.state.equipment.head !== 'empty'){
-        //         strBuff += this.state.equipment.head.pwr
-        //     }
-        //     if(this.state.equipment.arms !== 'empty'){
-        //         strBuff += this.state.equipment.arms.pwr
-        //     }
-        //     if(this.state.equipment.legs !== 'empty'){
-        //         strBuff += this.state.equipment.legs.pwr
-        //     }
-        //     if(this.state.equipment.chest !== 'empty'){
-        //         strBuff += this.state.equipment.chest.pwr
-        //     }
-        // let trueStr = strBuff += this.props.strengthStat
-
-        //     let spdBuff = 0
-        //         if(this.state.equipment.weapon !== 'empty'){
-        //             spdBuff += this.state.equipment.weapon.spd
-        //         }
-        //         if(this.state.equipment.head !== 'empty'){
-        //             spdBuff += this.state.equipment.head.spd
-        //         }
-        //         if(this.state.equipment.arms !== 'empty'){
-        //             spdBuff += this.state.equipment.arms.spd
-        //         }
-        //         if(this.state.equipment.legs !== 'empty'){
-        //             spdBuff += this.state.equipment.legs.spd
-        //         }
-        //         if(this.state.equipment.chest !== 'empty'){
-        //             spdBuff += this.state.equipment.chest.spd
-        //         }
-        //     let trueSpd = spdBuff += this.props.speedStat
-
-        // let defBuff = 0
-        //     if(this.state.equipment.weapon !== 'empty'){
-        //         defBuff += this.state.equipment.weapon.def
-        //     }
-        //     if(this.state.equipment.head !== 'empty'){
-        //         defBuff += this.state.equipment.head.def
-        //     }
-        //     if(this.state.equipment.arms !== 'empty'){
-        //         defBuff += this.state.equipment.arms.def
-        //     }
-        //     if(this.state.equipment.legs !== 'empty'){
-        //         defBuff += this.state.equipment.legs.def
-        //     }
-        //     if(this.state.equipment.chest !== 'empty'){
-        //         defBuff += this.state.equipment.chest.def
-        //     }
-        // let trueDef = defBuff += this.props.defenseStat
 
         let inventory = <h3>Empty</h3>
         if (this.props.currentInventory[0]){
             inventory = this.props.currentInventory.map(item => {
                 return <Inventory item={item} equipment={this.state.equipment} remount={this.setHero}/>
             })}
+        
+        let buffs = {str: 0, def: 0, spd: 0}
+        if(this.state.equipment) {
+            Object.keys(this.state.equipment).map((item, index) => {
+                buffs.str += this.state.equipment[item].pwr ? this.state.equipment[item].pwr : 0
+                buffs.def += this.state.equipment[item].def ? this.state.equipment[item].def : 0
+                buffs.spd += this.state.equipment[item].spd ? this.state.equipment[item].spd : 0
+            }) 
+        }
+
         return (
             
             <div className='charBox'>
                 <div>
                     <h3>{hero ? hero.hero_name : 'nameless'}</h3>
-                    {/* <h4>Level: {this.props.level}</h4> */}
-                    {/* {this.props.exp >= this.props.nextLevel &&
-                        <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.statPoints)}>Level Up</button>
+                    <h4>Level: {this.props.level}</h4>
+                    {this.props.exp >= this.props.nextLevel &&
+                        <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.currentHero)}>Level Up</button>
                     }
                     <h4>EXP: {this.props.exp}/{this.props.nextLevel}</h4>
-                    <h4>Available Stat Points: {this.props.statPoints}</h4> */}
+                    <h4>Gold: {this.props.gold}</h4>
                     
                 </div>
-                {/* {this.props.monsterStatus !== 'dead' &&
-                    <button className="attackButtons" onClick={() => this.attackButton(this.props.monsterHP, 
-                                                                                trueStr, 
-                                                                                this.props.currentMonster.defense, 
-                                                                                this.props.monsterStatus, 
-                                                                                this.props.currentMonster.expValue,
-                                                                                this.props.exp)}>Attack</button>
-                } */}
+                <button onClick={() => this.attacking(this.props.currentMonster, this.state.hero, buffs)}>Attack!!</button>
                 <h3>Extra Stats: {hero ? hero.extra_stats : 0}</h3>
 
-                <StatBox statType='str' statModifier={this.setHero} currStat={this.props.currentHero.hero_str} statsLeft={hero ? hero.extra_stats : 0}/>
-                <StatBox statType='def' statModifier={this.setHero} currStat={this.props.currentHero.hero_def} statsLeft={hero ? hero.extra_stats : 0}/>
-                <StatBox statType='spd' statModifier={this.setHero} currStat={this.props.currentHero.hero_spd} statsLeft={hero ? hero.extra_stats : 0}/>
+                <StatBox statType='str' statModifier={this.setHero} buffs = {buffs} currStat={this.props.currentHero.hero_str} statsLeft={hero ? hero.extra_stats : 0}/>
+                <StatBox statType='def' statModifier={this.setHero} buffs = {buffs} currStat={this.props.currentHero.hero_def} statsLeft={hero ? hero.extra_stats : 0}/>
+                <StatBox statType='spd' statModifier={this.setHero} buffs = {buffs} currStat={this.props.currentHero.hero_spd} statsLeft={hero ? hero.extra_stats : 0}/>
                 <h3>Equipment:</h3>
                 {liveEquipment}
                 
+                <button onClick={() => this.openInventory()}>Inventory</button>
+                {this.state.invOpen && 
+                    <div className='inventory'>
+                        {inventory}
+                    </div>
+                }
                 
-                <div className='inventory'>
-                    {inventory}
-                </div>
             </div>
         )
     }
 
 }   
-const mapStateToProps = state => ({...state.reducer, ...state.heroReducer})
+const mapStateToProps = state => ({...state.reducer, ...state.heroReducer, ...state.monsterReducer})
 
-export default withRouter(connect(mapStateToProps, {statModifier, levelUp, equipItem, attack})(CharacterBox));
+export default withRouter(connect(mapStateToProps, {statModifier, levelUp, attack, beatMonster, levelUp})(CharacterBox));

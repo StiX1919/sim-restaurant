@@ -9,9 +9,7 @@ import CharacterBox from './mpComponents/CharacterBox/CharacterBox'
 import MonsterBox from './mpComponents/MonsterBox/MonsterBox'
 import Shop from './mpComponents/Shop/Shop'
 
-import { getMonster,
-          attack,
-        } from '../../ducks/reducer'
+import {getMonster} from '../../ducks/monsterReducer'
 
 class MainPage extends Component {
   constructor(props) {
@@ -19,19 +17,12 @@ class MainPage extends Component {
     this.state = {
       shop: false
     }
-
-    this.attackButton = this.attackButton.bind(this)
     this.openShop = this.openShop.bind(this)
 
   }
 
   componentDidMount() {
     this.props.getMonster()
-  }
-
-  attackButton(HP, userStr, monDef, monStatus, monExp, currExp){
-    console.log('teststats', HP, userStr, monDef, monStatus, monExp, currExp)
-    this.props.attack(HP, userStr, monDef, monStatus, monExp, currExp)  
   }
 
   openShop() {
@@ -56,18 +47,21 @@ class MainPage extends Component {
     return (
     <div className='page'>
       <div className="App">
-        <CharacterBox />
+        <CharacterBox getNewMon={this.props.getMonster}/>
         
         <div className="attacks">
-          {this.props.monsterStatus === 'dead' &&
-            <button onClick={() => this.props.getMonster()} >New Monster</button>
+          {this.props.currentMonster && this.props.currentMonster.HP <= 0 &&
+            <div>
+              <h2>Monster is Dead!</h2>
+              <button onClick={() => this.props.getMonster()} >New Monster</button>
+            </div>
           }
         </div>
 
 
         <div>
-          {this.props.currentMonster && this.props.monsterStatus !== 'dead' && <MonsterBox />}
-          {this.props.monsterStatus === 'dead' && <h2>Monster is Dead!</h2>}
+          {this.props.currentMonster && this.props.currentMonster.HP > 0 && <MonsterBox />}
+          
         </div>
         
       </div>
@@ -83,6 +77,6 @@ class MainPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({...state.reducer, ...state.heroReducer})
+const mapStateToProps = state => ({...state.reducer, ...state.heroReducer, ...state.monsterReducer})
 
-export default withRouter(connect(mapStateToProps, { getMonster, attack })(MainPage));
+export default withRouter(connect(mapStateToProps, { getMonster})(MainPage));

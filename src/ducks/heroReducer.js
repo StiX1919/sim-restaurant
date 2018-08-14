@@ -12,6 +12,9 @@ const PURCHASE_ITEM = "PURCHASE_ITEM"
 
 const EQUIP_GEAR = 'EQUIP_GEAR'
 
+const BEAT_MONSTER = 'BEAT_MONSTER'
+const LEVEL_UP = 'LEVEL_UP'
+
 //Initial State
 
 const initialState = {
@@ -22,14 +25,45 @@ const initialState = {
         chest: 'empty',
         arms: 'empty',
         legs: 'empty',
-        weapon: {name: 'Axe', pwr: 2, spd: 0, def: 0, price: 14, type: 'weapon'}
+        weapon: 'empty'
     },
     currentInventory: [],
-    gold: 100
+    exp: 0,
+    nextLevel: 100,
+    level: 1,
+    gold: 100,
+    bonusStats: 0
+
 }
 
 
 //Action Creators
+export function levelUp(exp, level, nextLevel, hero){
+    
+    let newLevel = level += 1
+
+    let nextLevelMod = 1 + newLevel/10
+
+    let newExp = exp - nextLevel
+    let newNextLevel = Math.floor(nextLevel * nextLevelMod)
+    let newBonusStats = hero.extra_stats += 1
+    let newHero = Object.assign({}, hero, {extra_stats: newBonusStats})
+
+    return {
+        type: LEVEL_UP,
+        payload: {
+            newLevel, newExp, newNextLevel, newHero, newBonusStats
+        }
+    }
+}
+
+export function beatMonster(mon, currExp, currGold) {
+    let bonuses = {exp: currExp += mon.expValue, gold: currGold += mon.gold}
+    return {
+        type: BEAT_MONSTER,
+        payload: bonuses
+    }
+}
 
 export function equipGear(item, CE) {
     let newObj = CE
@@ -106,7 +140,8 @@ export default function heroReducer(state=initialState, action) {
         case SELECT_HERO:
             return {
                 ...state,
-                currentHero: action.payload
+                currentHero: action.payload,
+                bonusStats: action.payload.extra_stats
             }
         case STAT_MODIFIER + '_PENDING':
             return {
@@ -135,11 +170,27 @@ export default function heroReducer(state=initialState, action) {
                 currentInventory: action.payload.newInv,
                 gold: action.payload.newGold
             })
+        
+        case BEAT_MONSTER:
+            return Object.assign({}, state, {
+                exp: action.payload.exp,
+                gold: action.payload.gold
+            })
 
         case EQUIP_GEAR:
             return {
                 ...state,
                 currentEquipment: action.payload
+            }
+
+        case LEVEL_UP:
+            return {
+                ...state,
+                currentHero: action.payload.newHero,
+                exp: action.payload.newExp,
+                nextLevel: action.payload.newNextLevel,
+                level: action.payload.newLevel,
+                bonusStats: action.payload.newBonusStats
             }
 
         default:

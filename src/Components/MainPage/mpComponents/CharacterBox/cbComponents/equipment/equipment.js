@@ -16,7 +16,7 @@ class Equipment extends Component {
 
     render() {
         let currItem = this.props.equipObj
-        console.log('testing', currItem)
+        console.log('equiped item', currItem)
         return (
             <div className='statBox'>
                 <h4>{this.props.type}: {currItem.name ? currItem.name : currItem}</h4>
