@@ -9,9 +9,7 @@ import StatBox from './cbComponents/StatBox/StatBox'
 import Equipment from './cbComponents/equipment/equipment'
 import Inventory from './cbComponents/Inventory/Inventory'
 
-import {levelUp} from '../../../../ducks/reducer'
-
-import {statModifier, beatMonster} from '../../../../ducks/heroReducer'
+import {statModifier, beatMonster, levelUp} from '../../../../ducks/heroReducer'
 
 import {attack} from '../../../../ducks/monsterReducer'
 
@@ -21,7 +19,8 @@ class CharacterBox extends Component {
         super()
         this.state = {
             hero: null,
-            equipment: null
+            equipment: null,
+            invOpen: false
         }
 
         this.setHero = this.setHero.bind(this)
@@ -46,7 +45,7 @@ class CharacterBox extends Component {
         let newHP = monster.HP -= power
         if(newHP <= 0) {
             this.props.beatMonster(monster, this.props.exp, this.props.gold)
-            this.props.getNewMon()
+            // this.props.getNewMon()
         } else {
             let newMon = Object.assign({}, monster, {HP: newHP})
             
@@ -54,10 +53,14 @@ class CharacterBox extends Component {
         }
         
     }
+
+    openInventory() {
+        this.setState({invOpen: !this.state.invOpen})
+    }
       
 
     render() {
-        let hero = this.state.hero
+        let hero = this.props.currentHero
 
         let liveEquipment = 'Loading...'
         if(this.state.equipment) {
@@ -86,12 +89,11 @@ class CharacterBox extends Component {
             <div className='charBox'>
                 <div>
                     <h3>{hero ? hero.hero_name : 'nameless'}</h3>
-                    {/* <h4>Level: {this.props.level}</h4> */}
-                    {/* {this.props.exp >= this.props.nextLevel &&
-                        <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.statPoints)}>Level Up</button>
+                    <h4>Level: {this.props.level}</h4>
+                    {this.props.exp >= this.props.nextLevel &&
+                        <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.currentHero)}>Level Up</button>
                     }
-                    <h4>EXP: {this.props.exp}/{this.props.nextLevel}</h4>*/}
-                    <h3>EXP: {this.props.exp}</h3>
+                    <h4>EXP: {this.props.exp}/{this.props.nextLevel}</h4>
                     <h4>Gold: {this.props.gold}</h4>
                     
                 </div>
@@ -104,10 +106,13 @@ class CharacterBox extends Component {
                 <h3>Equipment:</h3>
                 {liveEquipment}
                 
+                <button onClick={() => this.openInventory()}>Inventory</button>
+                {this.state.invOpen && 
+                    <div className='inventory'>
+                        {inventory}
+                    </div>
+                }
                 
-                <div className='inventory'>
-                    {inventory}
-                </div>
             </div>
         )
     }
@@ -115,4 +120,4 @@ class CharacterBox extends Component {
 }   
 const mapStateToProps = state => ({...state.reducer, ...state.heroReducer, ...state.monsterReducer})
 
-export default withRouter(connect(mapStateToProps, {statModifier, levelUp, attack, beatMonster})(CharacterBox));
+export default withRouter(connect(mapStateToProps, {statModifier, levelUp, attack, beatMonster, levelUp})(CharacterBox));
