@@ -31,7 +31,7 @@ const initialState = {
     exp: 0,
     nextLevel: 100,
     level: 1,
-    gold: 100,
+    gold: 10,
     bonusStats: 0
 
 }
@@ -41,12 +41,10 @@ const initialState = {
 export function levelUp(exp, level, nextLevel, hero){
     
     let newLevel = level += 1
-
-    let nextLevelMod = 1 + newLevel/10
-
     let newExp = exp - nextLevel
-    let newNextLevel = Math.floor(nextLevel * nextLevelMod)
+    let newNextLevel = newLevel * 100
     let newBonusStats = hero.extra_stats += 1
+
     let newHero = Object.assign({}, hero, {extra_stats: newBonusStats})
 
     return {
@@ -76,10 +74,12 @@ export function equipGear(item, CE) {
 }
 
 export function selectHero(hero) {
+
+    let nextLevel = hero.hero_level * 100
     console.log('gotHero', hero)
     return {
         type: SELECT_HERO,
-        payload: hero
+        payload: {hero, nextLevel}
     }
     
 }
@@ -140,8 +140,12 @@ export default function heroReducer(state=initialState, action) {
         case SELECT_HERO:
             return {
                 ...state,
-                currentHero: action.payload,
-                bonusStats: action.payload.extra_stats
+                currentHero: action.payload.hero,
+                exp: action.payload.hero.hero_exp,
+                level: action.payload.hero.hero_level,
+                gold: action.payload.hero.gold,
+                bonusStats: action.payload.hero.extra_stats,
+                nextLevel: action.payload.nextLevel
             }
         case STAT_MODIFIER + '_PENDING':
             return {
