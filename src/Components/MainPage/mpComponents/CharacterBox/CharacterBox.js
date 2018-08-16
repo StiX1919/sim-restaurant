@@ -9,7 +9,7 @@ import StatBox from './cbComponents/StatBox/StatBox'
 import Equipment from './cbComponents/equipment/equipment'
 import Inventory from './cbComponents/Inventory/Inventory'
 
-import {statModifier, beatMonster, levelUp} from '../../../../ducks/heroReducer'
+import {statModifier, beatMonster, levelUp, getWeaponExp} from '../../../../ducks/heroReducer'
 
 import {attack} from '../../../../ducks/monsterReducer'
 
@@ -45,8 +45,15 @@ class CharacterBox extends Component {
         let newHP = monster.HP -= power
         if(newHP <= 0) {
             this.props.beatMonster(monster, this.props.exp, this.props.gold)
-            // this.props.getNewMon()
-        } else {
+        } else if(this.state.equipment.weapon !== 'empty'){
+            console.log('hit with weapon')
+
+            this.props.getWeaponExp(this.state.equipment.weapon, this.props.abilities)
+            let newMon = Object.assign({}, monster, {HP: newHP})
+            
+            this.props.attack(newMon)
+        }
+        else {
             let newMon = Object.assign({}, monster, {HP: newHP})
             
             this.props.attack(newMon)
@@ -128,4 +135,4 @@ class CharacterBox extends Component {
 }   
 const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer})
 
-export default withRouter(connect(mapStateToProps, {statModifier, levelUp, attack, beatMonster, levelUp})(CharacterBox));
+export default withRouter(connect(mapStateToProps, {statModifier, levelUp, attack, beatMonster, levelUp, getWeaponExp})(CharacterBox));

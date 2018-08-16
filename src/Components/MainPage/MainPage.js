@@ -15,7 +15,10 @@ class MainPage extends Component {
   constructor(props) {
     super()
     this.state = {
-      shop: false
+      shop: false,
+      skills: false,
+      skillView: false,
+      skillArr: []
     }
     this.openShop = this.openShop.bind(this)
 
@@ -29,6 +32,12 @@ class MainPage extends Component {
     if(this.state.shop === true){
       this.setState({shop: false})
     } else this.setState({shop: true})
+  }
+
+  openSkillView() {
+    if(this.state.skillView === true){
+      this.setState({skillView: false})
+    } else this.setState({skillView: true})
   }
 
   render() {
@@ -59,6 +68,18 @@ class MainPage extends Component {
           
         </div>
         
+      </div>
+      <div className='skills'>
+        
+        
+        {this.state.skills === true &&
+          <div>
+            <button onClick={this.openSkillView}>Skills</button>
+            {this.state.skillArr.map(skill => [
+              <h4>{skill.name}: Lv:{skill.level} {skill.exp}/{skill.level * 100}</h4>
+            ])}
+          </div>
+        }
       </div>
       <div className='shop'>
         <button onClick={this.openShop}>Shop</button>
