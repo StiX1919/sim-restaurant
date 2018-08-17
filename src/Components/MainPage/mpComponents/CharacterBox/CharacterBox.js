@@ -50,6 +50,7 @@ class CharacterBox extends Component {
 
             this.props.getWeaponExp(this.state.equipment.weapon, this.props.abilities)
             let newMon = Object.assign({}, monster, {HP: newHP})
+            //demo stuff
             
             this.props.attack(newMon)
         }
