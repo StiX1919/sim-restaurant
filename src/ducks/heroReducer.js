@@ -15,6 +15,8 @@ const EQUIP_GEAR = 'EQUIP_GEAR'
 const BEAT_MONSTER = 'BEAT_MONSTER'
 const LEVEL_UP = 'LEVEL_UP'
 
+const GET_WEAPON_EXP = 'GET_WEAPON_EXP'
+
 //Initial State
 
 const initialState = {
@@ -32,12 +34,35 @@ const initialState = {
     nextLevel: 100,
     level: 1,
     gold: 10,
-    bonusStats: 0
+    bonusStats: 0,
+    abilities: []
 
 }
 
 
 //Action Creators
+export function getWeaponExp(weapon, abilities) {
+    console.log(weapon)
+    let newAbils = abilities.map(abil => {
+        if(abilities[0]){
+            if(abil.name === weapon.weaponType){
+                abil.exp++
+            } else
+            for(let i = 0; i < weapon.damageType; i++){
+                if(abil.name === weapon.damageType[i]){
+                    abil.exp++
+                }
+            }
+        }
+        
+    })
+
+    return {
+        type: GET_WEAPON_EXP,
+        payload: null
+    }
+}
+
 export function levelUp(exp, level, nextLevel, hero){
     
     let newLevel = level += 1
