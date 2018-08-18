@@ -41,6 +41,8 @@ const initialState = {
 
 
 //Action Creators
+
+//grants weapon abilities and experience
 export function getWeaponExp(weapon, abilities) {
     console.log(weapon)
     let newAbils = abilities.map(abil => {
