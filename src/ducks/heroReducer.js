@@ -65,6 +65,8 @@ export function getWeaponExp(weapon, abilities) {
     }
 }
 
+
+//resets exp and adds to level
 export function levelUp(exp, level, nextLevel, hero){
     
     let newLevel = level += 1
