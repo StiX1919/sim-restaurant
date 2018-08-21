@@ -41,6 +41,8 @@ const initialState = {
 
 
 //Action Creators
+
+//grants weapon abilities and experience
 export function getWeaponExp(weapon, abilities) {
     console.log(weapon)
     let newAbils = abilities.map(abil => {
@@ -63,6 +65,8 @@ export function getWeaponExp(weapon, abilities) {
     }
 }
 
+
+//resets exp and adds to level
 export function levelUp(exp, level, nextLevel, hero){
     
     let newLevel = level += 1

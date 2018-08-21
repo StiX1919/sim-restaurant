@@ -27,7 +27,7 @@ class MonsterBox extends Component {
             </div>
         )
     }
-
+///sneaky commit
 }   
 const mapStateToProps = state => ({...state.monsterReducer})
 
