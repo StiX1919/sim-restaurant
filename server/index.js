@@ -115,12 +115,14 @@ app.get('/api/getUser', (req, res, next) => {
   next()
 })
 
+
 app.get('/api/getHeroes', getHeroes)
 
 app.get('/api/getClasses', getClasses)
 app.get('/api/getRaces', getRaces)
 
 app.post('/api/newHero', createNewHero)
+
 
 //LISTENING
 app.listen(port, () => {
