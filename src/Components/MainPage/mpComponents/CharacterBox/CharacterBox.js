@@ -136,3 +136,6 @@ class CharacterBox extends Component {
 const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer})
 
 export default withRouter(connect(mapStateToProps, {statModifier, levelUp, attack, beatMonster, levelUp, getWeaponExp})(CharacterBox));
+
+
+// looking to rehash the whole project from scratch. This will mainly be used as examples

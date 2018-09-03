@@ -30,9 +30,9 @@ module.exports = {
     },
 
     getHeroes: (req, res) => {
-        const dbInstance = req.app.set('db');
+        // const dbInstance = ;
 
-        dbInstance.getHeroes([req.user.user_id]).then(response => {
+        req.app.get('db').getHeroes([req.user.user_id]).then(response => {
             console.log('hero response', response[0])
             res.status(200).json(response)
         }).catch(console.log)
